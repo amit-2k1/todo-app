@@ -34,3 +34,7 @@ li {
   font-weight: normal;
   margin: 0.5rem 0.25rem;
 }
+
+.svg-btn {
+  cursor: pointer;
+}
