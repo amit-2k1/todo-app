@@ -44,44 +44,29 @@
             </svg>
           </button>
         </div>
-
+        
           <ul id="todo-list" class="lists">
-            <li id="list-1" class="item">
-              <a href="#">List Name 1
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-              </a>
-            </li>
-
-            <li id="list-2" class="item">
-              <a href="#">List Name 2
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-              </a>
-              
-            </li>
-
-            <li id="list-3" class="item">
-              <a href="#">List Name 3
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-              </a>
-              
-            </li>
+            <template id="todo-list-template">
+              <li class="item">
+                <a>
+                  <p class="content"></p>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </a>
+              </li>
+            </template>
           </ul>
 
-          <div id="add-todo-form" class="overlay-form">
+          <div id="add-todo-list-form" class="overlay-form">
             <div class="close-btn" onclick="console.log('toggling todo list form')">&times;</div>
             <h3>Create a new todo list</h3>
               <div class="form-element">
-                <label for="list-name">List Name</label>
-                <input type="text" id="list-name">
+                <label for="list-name-field">List Name</label>
+                <input type="text" id="list-name-field">
               </div>
               <div class="form-element">
-                <button onclick="console.log('adding todo list')">Add Todo List</button>
+                <button class="add-list-submit-btn" onclick="console.log('adding todo list')">Add Todo List</button>
               </div>
           </div>
           
@@ -163,11 +148,11 @@
             <div class="close-btn" onclick="console.log('toggling todo form')">&times;</div>
             <h3>Create a new todo</h3>
               <div class="form-element">
-                <label for="todo-name">Todo</label>
-                <input type="text" id="todo-name">
+                <label for="todo-field">Todo</label>
+                <input type="text" id="todo-field">
               </div>
               <div class="form-element">
-                <button onclick="console.log('adding todo')">Add Todo</button>
+                <button class="add-todo-submit-btn" onclick="console.log('adding todo')">Add Todo</button>
               </div>
           </div>
           
