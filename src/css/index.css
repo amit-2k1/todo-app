@@ -1,0 +1,66 @@
+header {
+  background-color: #7dedff;
+  padding: 2rem;
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 a {
+  color: #fff;
+  font-size: 3rem;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+#profile {
+  font-size: 1.5rem;
+  background-color: #7dedff;
+}
+
+.dropdown {
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 1rem;
+  color: white;
+  padding: 0.25rem 0.5rem;
+}
+
+.dropdown:hover .dropbtn {
+  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+    0 0 82px #aae8f1, 0 0 92px #aae8f1, 0 0 102px #aae8f1, 0 0 151px #0fa;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 10vw;
+}
+
+.dropdown-item {
+  float: none;
+  padding: 0.25rem 0.5rem;
+  text-decoration: none;
+  display: block;
+  background-color: white;
+  text-align: left;
+}
+
+.sign-out-btn {
+  color: red;
+}
+
+.sign-out-btn:hover {
+  color: white;
+  background-color: red;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
