@@ -2,7 +2,7 @@ require('../css/style.css');
 require('../css/index.css');
 require('../css/form.css');
 
-import { renderTodoLists } from './render';
+import { renderTodoLists, renderTodos } from './render';
 
 /*
     TODO :  --------->
@@ -15,28 +15,71 @@ import { renderTodoLists } from './render';
 */
 
 const todoApp = {
-  state: 'showTodoLists',
-  todoStore: [
+  state: 'showTodos',
+  store: [
     {
       id: '1',
       listName: 'school',
-      todos: ['todo 1.1', 'todo 1.2']
+      todos: [
+        {
+          content: 'todo 1.1',
+          completed: true
+        },
+        {
+          content: 'todo 1.2',
+          completed: false
+        }
+      ]
     },
     {
       id: '2',
       listName: 'personal',
-      todos: ['todo 2.1', 'todo 2.2', 'todo 2.3', 'todo 2.4']
+      todos: [
+        {
+          content: 'todo 2.1',
+          completed: false
+        },
+        {
+          content: 'todo 2.1',
+          completed: true
+        },
+        {
+          content: 'todo 2.1',
+          completed: false
+        },
+        {
+          content: 'todo 2.1',
+          completed: false
+        }
+      ]
     },
     {
       id: '3',
       listName: 'home',
-      todos: ['todo 3.1', 'todo 3.2', 'todo 3.3', 'todo 3.4']
+      todos: [
+        {
+          content: 'todo 2.1',
+          completed: false
+        },
+        {
+          content: 'todo 2.1',
+          completed: true
+        },
+        {
+          content: 'todo 2.1',
+          completed: false
+        },
+        {
+          content: 'todo 2.1',
+          completed: true
+        }
+      ]
     }
   ]
 };
 
 if (todoApp.state === 'showTodoLists') {
-  renderTodoLists(todoApp.todoStore);
+  renderTodoLists(todoApp.store);
 } else if (todoApp.state === 'showTodos') {
-  console.log('rendering todos');
+  renderTodos(todoApp.store, 3);
 }

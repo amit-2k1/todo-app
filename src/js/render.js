@@ -18,3 +18,20 @@ export function renderTodoLists(todoStore) {
     todoListContainer.appendChild(li);
   });
 }
+
+export function renderTodos(todoStore, id) {
+  const todosTemplate = document.querySelector('template#todos-template');
+  const todoContainer = document.querySelector('ul.todos');
+  const liTemplate = todosTemplate.content.querySelector('li');
+
+  todoStore[id - 1].todos.forEach((todo, index) => {
+    const li = document.importNode(liTemplate, true);
+    const p = li.querySelector('p');
+
+    li.setAttribute('id', 'todo-' + index);
+    p.setAttribute('class', todo.completed ? 'completed' : '');
+    p.textContent = todo.content;
+
+    todoContainer.appendChild(li);
+  });
+}
