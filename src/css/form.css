@@ -1,0 +1,69 @@
+.overlay-form {
+  position: absolute;
+  top: 50vh;
+  left: 0px;
+  width: 100vw;
+  height: 0vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: -1;
+  opacity: 0;
+  padding: 80px 100px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: top 500ms ease-in-out, opacity 500ms ease-in-out,
+    height 0ms ease-in-out 500ms;
+}
+.overlay-form .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.overlay-form h3 {
+  font-size: 32px;
+  color: #7dedff;
+}
+
+.overlay-form .form-element {
+  margin: 20px 0px;
+}
+.overlay-form label {
+  display: block;
+  font-size: 17px;
+  color: #eee;
+  margin-bottom: 5px;
+}
+.overlay-form input {
+  width: 100%;
+  padding: 6px;
+  font-size: 17px;
+  border: 2px solid #eee;
+  background: transparent;
+  outline: none;
+  border-radius: 10px;
+}
+.overlay-form button {
+  margin-top: 10px;
+  width: 100px;
+  height: 3rem;
+  font-size: 15px;
+  text-transform: uppercase;
+  background: #fff;
+  color: #222;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#add-todo-form.activeForm.overlay-form {
+  z-index: 2;
+  opacity: 1;
+  top: 0px;
+  height: 100vh;
+  transition: top 500ms ease-in-out, opacity 500ms ease-in-out,
+    height 0ms ease-in-out 0ms;
+}
