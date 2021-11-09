@@ -122,6 +122,10 @@ h1 a {
   color: #bebebe;
 }
 
+.todo p.completed + .todo-btns .tick-btn {
+  fill: #0fa;
+}
+
 .activeContainer {
   display: block;
   transform: translate(0);

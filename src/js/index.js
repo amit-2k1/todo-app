@@ -91,7 +91,8 @@ const closeTodoFormBtn = addTodoForm.querySelector('.close-btn');
 const deleteTodoBtns = todosContainer.querySelectorAll(
   '.todo-btns .delete-btn'
 );
-
+const tickTodoBtns = todosContainer.querySelectorAll('.todo-btns .tick-btn');
+console.log(tickTodoBtns);
 function render(event, eventType, { state, activeTodos, store }) {
   switch (state) {
     case 'showingTodoLists': {
@@ -158,6 +159,16 @@ function render(event, eventType, { state, activeTodos, store }) {
           console.log(todoApp.store[id].todos);
           return 'showingTodos';
         }
+        case 'tickTodoBtnClicked': {
+          const li = event.path[3];
+          const p = li.querySelector('p');
+          const id = parseInt(li.id.split('-')[1]);
+
+          todoApp.store[id].todos.completed = !store[id].todos.completed;
+          p.classList.toggle('completed');
+
+          return 'showingTodos';
+        }
       }
     }
     case 'showingAddListForm': {
@@ -211,5 +222,10 @@ closeTodoFormBtn.addEventListener('click', (event) => {
 deleteTodoBtns.forEach((btn) => {
   btn.addEventListener('click', (event) => {
     todoApp.state = render(event, 'deleteTodoBtnClicked', todoApp);
+  });
+});
+tickTodoBtns.forEach((btn) => {
+  btn.addEventListener('click', (event) => {
+    todoApp.state = render(event, 'tickTodoBtnClicked', todoApp);
   });
 });
