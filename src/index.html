@@ -37,7 +37,7 @@
       <div id="todo-lists-container" class="container activeContainer">
         <div class="container-header">
           <h2 class="title">TODO LIST<h2>
-          <button class="add-todo-list-btn" onclick="console.log('toggling todo list form')">
+          <button class="add-todo-list-btn">
             <svg style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#7dedff" class="bi bi-plus-circle" viewBox="0 0 18 18">
               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -59,14 +59,14 @@
           </ul>
 
           <div id="add-todo-list-form" class="overlay-form">
-            <div class="close-btn" onclick="console.log('toggling todo list form')">&times;</div>
+            <div class="close-btn">&times;</div>
             <h3>Create a new todo list</h3>
               <div class="form-element">
                 <label for="list-name-field">List Name</label>
                 <input type="text" id="list-name-field">
               </div>
               <div class="form-element">
-                <button class="add-list-submit-btn" onclick="console.log('adding todo list')">Add Todo List</button>
+                <button class="add-list-submit-btn">Add Todo List</button>
               </div>
           </div>
           
@@ -74,13 +74,13 @@
 
       <div id="todos-container" class="container">
         <div class="container-header">
-          <button class="back-btn" onclick="console.log('returning to todo list')">
+          <button class="back-btn">
             <svg class="svg-btn" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 18 18">
               <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
             </svg>
           </button>
           <h2 class="title">TODOS<h2>
-          <button class="add-todo-btn" onclick="console.log('toggling todo form')">
+          <button class="add-todo-btn">
             <svg class="svg-btn"" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#7dedff" class="bi bi-plus-circle" viewBox="0 0 18 18">
               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -94,13 +94,13 @@
             <li class="item todo">
               <p></p>
               <div class="todo-btns">
-                <button onclick="console.log('marking todo as completed')">
+                <button>
                   <svg class="svg-btn" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check2-circle" viewBox="0 0 18 18">
                     <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
                     <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
                   </svg>
                 </button>
-                <button onclick="console.log('deleting a todo')">
+                <button>
                   <svg class="svg-btn" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="red" class="bi bi-x-circle" viewBox="0 0 18 18">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -112,14 +112,14 @@
         </div>
 
           <div id="add-todo-form" class="overlay-form">
-            <div class="close-btn" onclick="console.log('toggling todo form')">&times;</div>
+            <div class="close-btn">&times;</div>
             <h3>Create a new todo</h3>
               <div class="form-element">
                 <label for="todo-field">Todo</label>
                 <input type="text" id="todo-field">
               </div>
               <div class="form-element">
-                <button class="add-todo-submit-btn" onclick="console.log('adding todo')">Add Todo</button>
+                <button class="add-todo-submit-btn">Add Todo</button>
               </div>
           </div>
           

@@ -84,6 +84,7 @@ const todoListLinks = document.querySelectorAll('#todo-list li a');
 const backBtn = todosContainer.querySelector('button.back-btn');
 const addTodoListBtn = todoListsContainer.querySelector('.add-todo-list-btn');
 const addTodoListForm = todoListsContainer.querySelector('#add-todo-list-form');
+const closeTodoListFormBtn = todoListsContainer.querySelector('.close-btn');
 
 function render(event, eventType, { state, activeTodos }) {
   switch (state) {
@@ -92,7 +93,7 @@ function render(event, eventType, { state, activeTodos }) {
         case 'linkClicked': {
           const id = parseInt(event.target.id.split('-')[1]);
           console.log(id, event.target.id);
-          if (id !== 0 && !id) return;
+          if (id !== 0 && !id) return 'showingTodoLists';
 
           if (isActiveContainer(todoListsContainer)) {
             todoListsContainer.classList.remove('activeContainer');
@@ -132,6 +133,16 @@ function render(event, eventType, { state, activeTodos }) {
         }
       }
     }
+    case 'showingAddListForm':
+      switch (eventType) {
+        case 'closeBtnClicked': {
+          if (addTodoListForm.classList.contains('activeForm')) {
+            addTodoListForm.classList.remove('activeForm');
+          }
+
+          return 'showingTodoLists';
+        }
+      }
   }
 }
 
@@ -147,4 +158,7 @@ backBtn.addEventListener('click', (event) => {
 
 addTodoListBtn.addEventListener('click', (event) => {
   todoApp.state = render(event, 'addListBtnClicked', todoApp);
+});
+closeTodoListFormBtn.addEventListener('click', (event) => {
+  todoApp.state = render(event, 'closeBtnClicked', todoApp);
 });
