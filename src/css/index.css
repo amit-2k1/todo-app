@@ -96,6 +96,9 @@ h1 a {
   justify-content: space-between;
   align-items: center;
 }
+.todos ul {
+  display: none;
+}
 
 .todo {
   font-size: 1rem;
@@ -122,4 +125,8 @@ h1 a {
 .activeContainer {
   display: block;
   transform: translate(0);
+}
+
+.todos ul.activeTodos {
+  display: block;
 }

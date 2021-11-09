@@ -1,4 +1,4 @@
-export function renderTodoLists(todoStore) {
+export function createTodoLists(todoStore) {
   const todoListContainer = document.querySelector('ul#todo-list');
   const todoListTemplate = document.querySelector(
     'template#todo-list-template'
@@ -19,12 +19,17 @@ export function renderTodoLists(todoStore) {
   });
 }
 
-export function renderTodos(todoStore, id) {
+export function createTodos({ todos, id }) {
   const todosTemplate = document.querySelector('template#todos-template');
-  const todoContainer = document.querySelector('ul.todos');
+  const todosContainer = document.querySelector('div.todos');
+
+  const ul = document.createElement('ul');
+  ul.setAttribute('id', 'todos-' + id);
+  todosContainer.appendChild(ul);
+
   const liTemplate = todosTemplate.content.querySelector('li');
 
-  todoStore[id - 1].todos.forEach((todo, index) => {
+  todos.forEach((todo, index) => {
     const li = document.importNode(liTemplate, true);
     const p = li.querySelector('p');
 
@@ -32,6 +37,8 @@ export function renderTodos(todoStore, id) {
     p.setAttribute('class', todo.completed ? 'completed' : '');
     p.textContent = todo.content;
 
-    todoContainer.appendChild(li);
+    ul.appendChild(li);
   });
+
+  todosContainer.appendChild(ul);
 }

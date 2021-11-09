@@ -2,23 +2,13 @@ require('../css/style.css');
 require('../css/index.css');
 require('../css/form.css');
 
-import { renderTodoLists, renderTodos } from './render';
-
-/*
-    TODO :  --------->
-    1. render todo list - done
-    2. render todos
-    3. add todos list
-    4. add todos
-    5. mark todo as completed
-    6. delete a todo
-*/
+import { createTodoLists, createTodos } from './init';
 
 const todoApp = {
   state: 'showTodos',
   store: [
     {
-      id: '1',
+      id: 0,
       listName: 'school',
       todos: [
         {
@@ -32,7 +22,7 @@ const todoApp = {
       ]
     },
     {
-      id: '2',
+      id: 1,
       listName: 'personal',
       todos: [
         {
@@ -54,23 +44,23 @@ const todoApp = {
       ]
     },
     {
-      id: '3',
+      id: 2,
       listName: 'home',
       todos: [
         {
-          content: 'todo 2.1',
+          content: 'todo 3.1',
           completed: false
         },
         {
-          content: 'todo 2.1',
+          content: 'todo 3.2',
           completed: true
         },
         {
-          content: 'todo 2.1',
+          content: 'todo 3.3',
           completed: false
         },
         {
-          content: 'todo 2.1',
+          content: 'todo 3.4',
           completed: true
         }
       ]
@@ -78,8 +68,10 @@ const todoApp = {
   ]
 };
 
-if (todoApp.state === 'showTodoLists') {
-  renderTodoLists(todoApp.store);
-} else if (todoApp.state === 'showTodos') {
-  renderTodos(todoApp.store, 3);
-}
+// Loading all todo lists
+createTodoLists(todoApp.store);
+// Loading all todos in DOM
+todoApp.store.forEach((todos) => {
+  console.log(todos);
+  createTodos(todos);
+});
