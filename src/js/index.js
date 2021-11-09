@@ -88,8 +88,11 @@ const closeTodoListFormBtn = addTodoListForm.querySelector('.close-btn');
 const openAddTodoFormBtn = todosContainer.querySelector('.add-todo-btn');
 const addTodoForm = todosContainer.querySelector('#add-todo-form');
 const closeTodoFormBtn = addTodoForm.querySelector('.close-btn');
+const deleteTodoBtns = todosContainer.querySelectorAll(
+  '.todo-btns .delete-btn'
+);
 
-function render(event, eventType, { state, activeTodos }) {
+function render(event, eventType, { state, activeTodos, store }) {
   switch (state) {
     case 'showingTodoLists': {
       switch (eventType) {
@@ -141,6 +144,20 @@ function render(event, eventType, { state, activeTodos }) {
 
           return 'showingAddTodoForm';
         }
+        case 'deleteTodoBtnClicked': {
+          const ul = event.path[4];
+          const li = event.path[3];
+          const id = parseInt(li.id.split('-')[1]);
+
+          todoApp.store[id].todos = store[id].todos.filter(
+            (_, index) => index != id
+          );
+
+          ul.removeChild(li);
+
+          console.log(todoApp.store[id].todos);
+          return 'showingTodos';
+        }
       }
     }
     case 'showingAddListForm': {
@@ -189,4 +206,10 @@ openAddTodoFormBtn.addEventListener('click', (event) => {
 });
 closeTodoFormBtn.addEventListener('click', (event) => {
   todoApp.state = render(event, 'closeBtnClicked', todoApp);
+});
+
+deleteTodoBtns.forEach((btn) => {
+  btn.addEventListener('click', (event) => {
+    todoApp.state = render(event, 'deleteTodoBtnClicked', todoApp);
+  });
 });
