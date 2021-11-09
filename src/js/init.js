@@ -11,7 +11,7 @@ export function createTodoLists(todoStore) {
     const p = a.querySelector('a p');
 
     li.setAttribute('id', 'list-' + todo.id);
-    a.setAttribute('href', 'todos-' + todo.id);
+    a.setAttribute('id', 'todos-' + todo.id);
 
     p.textContent = todo.listName;
 

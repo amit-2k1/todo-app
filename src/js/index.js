@@ -3,9 +3,10 @@ require('../css/index.css');
 require('../css/form.css');
 
 import { createTodoLists, createTodos } from './init';
+import { isActiveContainer } from './utils';
 
 const todoApp = {
-  state: 'showTodos',
+  state: 'showTodoLists',
   store: [
     {
       id: 0,
@@ -72,6 +73,35 @@ const todoApp = {
 createTodoLists(todoApp.store);
 // Loading all todos in DOM
 todoApp.store.forEach((todos) => {
-  console.log(todos);
   createTodos(todos);
+});
+
+const todoListsContainer = document.querySelector('#todo-lists-container');
+const todosContainer = document.querySelector('#todos-container');
+const todosEles = document.querySelectorAll('.todos ul');
+const todoListLinks = document.querySelectorAll('#todo-list li a');
+
+function render(event, { state, store }) {
+  switch (state) {
+    case 'showTodoLists': {
+      const id = parseInt(event.target.id.split('-')[1]);
+      console.log(id);
+      if (id === NaN) return;
+
+      if (isActiveContainer(todoListsContainer)) {
+        todoListsContainer.classList.remove('activeContainer');
+      }
+
+      if (!isActiveContainer(todosContainer)) {
+        todosContainer.classList.add('activeContainer');
+        todosEles[id].classList.add('activeTodos');
+      }
+    }
+  }
+}
+
+todoListLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    render(event, todoApp);
+  });
 });
