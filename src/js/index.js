@@ -6,7 +6,8 @@ import { createTodoLists, createTodos } from './init';
 import { isActiveContainer } from './utils';
 
 const todoApp = {
-  state: 'showTodoLists',
+  state: 'showingTodoLists',
+  activeTodos: -1,
   store: [
     {
       id: 0,
@@ -80,12 +81,13 @@ const todoListsContainer = document.querySelector('#todo-lists-container');
 const todosContainer = document.querySelector('#todos-container');
 const todosEles = document.querySelectorAll('.todos ul');
 const todoListLinks = document.querySelectorAll('#todo-list li a');
+const backBtn = todosContainer.querySelector('button.back-btn');
 
-function render(event, { state, store }) {
+function render(event, { state, activeTodos }) {
   switch (state) {
-    case 'showTodoLists': {
+    case 'showingTodoLists': {
       const id = parseInt(event.target.id.split('-')[1]);
-      console.log(id);
+
       if (id === NaN) return;
 
       if (isActiveContainer(todoListsContainer)) {
@@ -95,13 +97,33 @@ function render(event, { state, store }) {
       if (!isActiveContainer(todosContainer)) {
         todosContainer.classList.add('activeContainer');
         todosEles[id].classList.add('activeTodos');
+        todoApp.activeTodos = id;
       }
+
+      return 'showingTodos';
+    }
+    case 'showingTodos': {
+      if (isActiveContainer(todosContainer)) {
+        todosContainer.classList.remove('activeContainer');
+        todosEles[activeTodos].classList.remove('activeTodos');
+        todoApp.activeTodos = -1;
+      }
+
+      if (!isActiveContainer(todoListsContainer)) {
+        todoListsContainer.classList.add('activeContainer');
+      }
+
+      return 'showingTodoLists';
     }
   }
 }
 
 todoListLinks.forEach((link) => {
   link.addEventListener('click', (event) => {
-    render(event, todoApp);
+    todoApp.state = render(event, todoApp);
   });
+});
+
+backBtn.addEventListener('click', (event) => {
+  todoApp.state = render(event, todoApp);
 });
