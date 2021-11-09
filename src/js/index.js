@@ -92,14 +92,14 @@ const deleteTodoBtns = todosContainer.querySelectorAll(
   '.todo-btns .delete-btn'
 );
 const tickTodoBtns = todosContainer.querySelectorAll('.todo-btns .tick-btn');
-console.log(tickTodoBtns);
+
 function render(event, eventType, { state, activeTodos, store }) {
   switch (state) {
     case 'showingTodoLists': {
       switch (eventType) {
         case 'linkClicked': {
           const id = parseInt(event.target.id.split('-')[1]);
-          console.log(id, event.target.id);
+
           if (id !== 0 && !id) return 'showingTodoLists';
 
           if (isActiveContainer(todoListsContainer)) {

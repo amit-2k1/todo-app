@@ -24,7 +24,7 @@
 }
 .overlay-form h3 {
   font-size: 32px;
-  color: #7dedff;
+  color: #fff;
 }
 
 .overlay-form .form-element {
@@ -39,12 +39,14 @@
 .overlay-form input {
   width: 100%;
   padding: 6px;
+  color: #7dedff;
   font-size: 17px;
   border: 2px solid #eee;
   background: transparent;
   outline: none;
   border-radius: 10px;
 }
+
 .overlay-form button {
   margin-top: 10px;
   width: 100px;

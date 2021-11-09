@@ -79,7 +79,6 @@ h1 a {
   width: 100%;
   top: 10vh;
   transform: translate(100%);
-  transition: transform ease-out;
 }
 
 .lists .item {
@@ -96,6 +95,7 @@ h1 a {
   justify-content: space-between;
   align-items: center;
 }
+
 .todos ul {
   display: none;
 }
