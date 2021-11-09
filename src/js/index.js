@@ -84,7 +84,10 @@ const todoListLinks = document.querySelectorAll('#todo-list li a');
 const backBtn = todosContainer.querySelector('button.back-btn');
 const addTodoListBtn = todoListsContainer.querySelector('.add-todo-list-btn');
 const addTodoListForm = todoListsContainer.querySelector('#add-todo-list-form');
-const closeTodoListFormBtn = todoListsContainer.querySelector('.close-btn');
+const closeTodoListFormBtn = addTodoListForm.querySelector('.close-btn');
+const openAddTodoFormBtn = todosContainer.querySelector('.add-todo-btn');
+const addTodoForm = todosContainer.querySelector('#add-todo-form');
+const closeTodoFormBtn = addTodoForm.querySelector('.close-btn');
 
 function render(event, eventType, { state, activeTodos }) {
   switch (state) {
@@ -131,9 +134,16 @@ function render(event, eventType, { state, activeTodos }) {
 
           return 'showingTodoLists';
         }
+        case 'addTodoBtnClicked': {
+          if (!addTodoForm.classList.contains('activeForm')) {
+            addTodoForm.classList.add('activeForm');
+          }
+
+          return 'showingAddTodoForm';
+        }
       }
     }
-    case 'showingAddListForm':
+    case 'showingAddListForm': {
       switch (eventType) {
         case 'closeBtnClicked': {
           if (addTodoListForm.classList.contains('activeForm')) {
@@ -143,6 +153,18 @@ function render(event, eventType, { state, activeTodos }) {
           return 'showingTodoLists';
         }
       }
+    }
+    case 'showingAddTodoForm': {
+      switch (eventType) {
+        case 'closeBtnClicked': {
+          if (addTodoForm.classList.contains('activeForm')) {
+            addTodoForm.classList.remove('activeForm');
+          }
+
+          return 'showingTodos';
+        }
+      }
+    }
   }
 }
 
@@ -160,5 +182,11 @@ addTodoListBtn.addEventListener('click', (event) => {
   todoApp.state = render(event, 'addListBtnClicked', todoApp);
 });
 closeTodoListFormBtn.addEventListener('click', (event) => {
+  todoApp.state = render(event, 'closeBtnClicked', todoApp);
+});
+openAddTodoFormBtn.addEventListener('click', (event) => {
+  todoApp.state = render(event, 'addTodoBtnClicked', todoApp);
+});
+closeTodoFormBtn.addEventListener('click', (event) => {
   todoApp.state = render(event, 'closeBtnClicked', todoApp);
 });
