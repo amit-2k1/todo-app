@@ -92,6 +92,9 @@ const deleteTodoBtns = todosContainer.querySelectorAll(
   '.todo-btns .delete-btn'
 );
 const tickTodoBtns = todosContainer.querySelectorAll('.todo-btns .tick-btn');
+const addTodoListSubmitBtn = addTodoListForm.querySelector(
+  '.add-list-submit-btn'
+);
 
 function render(event, eventType, { state, activeTodos, store }) {
   switch (state) {
@@ -180,6 +183,34 @@ function render(event, eventType, { state, activeTodos, store }) {
 
           return 'showingTodoLists';
         }
+        case 'submitBtnClicked': {
+          const listNameField =
+            addTodoListForm.querySelector('#list-name-field');
+          const listName = listNameField.value;
+
+          if (!listName) {
+            return 'showingTodoLists';
+          }
+
+          const newTodoList = {
+            id: store.length,
+            listName: listName,
+            todos: [
+              {
+                content: 'make new todo',
+                completed: false
+              }
+            ]
+          };
+
+          createTodoLists([newTodoList]);
+          createTodos(newTodoList);
+          store.push(newTodoList);
+
+          addTodoListForm.classList.remove('activeForm');
+
+          return 'showingTodoLists';
+        }
       }
     }
     case 'showingAddTodoForm': {
@@ -228,4 +259,8 @@ tickTodoBtns.forEach((btn) => {
   btn.addEventListener('click', (event) => {
     todoApp.state = render(event, 'tickTodoBtnClicked', todoApp);
   });
+});
+addTodoListSubmitBtn.addEventListener('click', (event) => {
+  todoApp.state = render(event, 'submitBtnClicked', todoApp);
+  console.log(todoApp.store);
 });
