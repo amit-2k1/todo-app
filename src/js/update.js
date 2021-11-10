@@ -137,6 +137,26 @@ export function update(event, eventType, { state, activeTodos, store }) {
 
           return 'showingTodos';
         }
+        case 'submitBtnClicked': {
+          const todoField = addTodoForm.querySelector('#todo-field');
+          const todo = todoField.value;
+          console.log(activeTodos);
+          if (!todo) {
+            return 'showingTodoLists';
+          }
+
+          const newTodo = {
+            content: todo,
+            completed: false
+          };
+
+          todoApp.store[activeTodos].todos.push(newTodo);
+          createTodos(todoApp.store[activeTodos]);
+
+          addTodoForm.classList.remove('activeForm');
+
+          return 'showingTodos';
+        }
       }
     }
   }

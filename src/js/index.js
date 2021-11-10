@@ -23,13 +23,10 @@ const closeTodoListFormBtn = addTodoListForm.querySelector('.close-btn');
 const openAddTodoFormBtn = todosContainer.querySelector('.add-todo-btn');
 const addTodoForm = todosContainer.querySelector('#add-todo-form');
 const closeTodoFormBtn = addTodoForm.querySelector('.close-btn');
-const deleteTodoBtns = todosContainer.querySelectorAll(
-  '.todo-btns .delete-btn'
-);
-const tickTodoBtns = todosContainer.querySelectorAll('.todo-btns .tick-btn');
 const addTodoListSubmitBtn = addTodoListForm.querySelector(
   '.add-list-submit-btn'
 );
+const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
 
 todoListLinks.forEach((link) => {
   link.addEventListener('click', (event) => {
@@ -54,17 +51,9 @@ closeTodoFormBtn.addEventListener('click', (event) => {
   todoApp.state = update(event, 'closeBtnClicked', todoApp);
 });
 
-deleteTodoBtns.forEach((btn) => {
-  btn.addEventListener('click', (event) => {
-    todoApp.state = update(event, 'deleteTodoBtnClicked', todoApp);
-  });
-});
-tickTodoBtns.forEach((btn) => {
-  btn.addEventListener('click', (event) => {
-    todoApp.state = update(event, 'tickTodoBtnClicked', todoApp);
-  });
-});
 addTodoListSubmitBtn.addEventListener('click', (event) => {
   todoApp.state = update(event, 'submitBtnClicked', todoApp);
-  console.log(todoApp.store);
+});
+addTodoSubmitBtn.addEventListener('click', (event) => {
+  todoApp.state = update(event, 'submitBtnClicked', todoApp);
 });

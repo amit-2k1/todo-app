@@ -1,3 +1,6 @@
+import todoApp from './store';
+import { update } from './update';
+
 export function createTodoLists(todoStore) {
   const todoListContainer = document.querySelector('ul#todo-list');
   const todoListTemplate = document.querySelector(
@@ -23,15 +26,34 @@ export function createTodos({ todos, id }) {
   const todosTemplate = document.querySelector('template#todos-template');
   const todosContainer = document.querySelector('div.todos');
 
-  const ul = document.createElement('ul');
-  ul.setAttribute('id', 'todos-' + id);
-  todosContainer.appendChild(ul);
+  let ul = document.createElement('ul');
+  const oldUl = todosContainer.querySelector(`#todos-${id}`);
+
+  if (oldUl) {
+    const lis = oldUl.querySelectorAll('.todo');
+    lis.forEach((li) => oldUl.removeChild(li));
+    ul = oldUl;
+  } else {
+    ul.setAttribute('id', 'todos-' + id);
+    todosContainer.appendChild(ul);
+  }
 
   const liTemplate = todosTemplate.content.querySelector('li');
 
   todos.forEach((todo, index) => {
+    console.log(todo);
     const li = document.importNode(liTemplate, true);
     const p = li.querySelector('p');
+
+    const deleteTodoBtns = li.querySelector('.todo-btns .delete-btn');
+    const tickTodoBtns = li.querySelector('.todo-btns .tick-btn');
+
+    deleteTodoBtns.addEventListener('click', (event) => {
+      todoApp.state = update(event, 'deleteTodoBtnClicked', todoApp);
+    });
+    tickTodoBtns.addEventListener('click', (event) => {
+      todoApp.state = update(event, 'tickTodoBtnClicked', todoApp);
+    });
 
     li.setAttribute('id', 'todo-' + index);
     p.setAttribute('class', todo.completed ? 'completed' : '');
@@ -40,5 +62,9 @@ export function createTodos({ todos, id }) {
     ul.appendChild(li);
   });
 
-  todosContainer.appendChild(ul);
+  if (oldUl) {
+    ul.setAttribute('class', 'activeTodos');
+  } else {
+    todosContainer.appendChild(ul);
+  }
 }
