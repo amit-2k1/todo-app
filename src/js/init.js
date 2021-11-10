@@ -16,6 +16,10 @@ export function createTodoLists(todoStore) {
     li.setAttribute('id', 'list-' + todo.id);
     a.setAttribute('id', 'todos-' + todo.id);
 
+    a.addEventListener('click', (event) => {
+      todoApp.state = update(event, 'linkClicked', todoApp);
+    });
+
     p.textContent = todo.listName;
 
     todoListContainer.appendChild(li);

@@ -28,12 +28,6 @@ const addTodoListSubmitBtn = addTodoListForm.querySelector(
 );
 const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
 
-todoListLinks.forEach((link) => {
-  link.addEventListener('click', (event) => {
-    todoApp.state = update(event, 'linkClicked', todoApp);
-  });
-});
-
 backBtn.addEventListener('click', (event) => {
   todoApp.state = update(event, 'backBtnClicked', todoApp);
 });

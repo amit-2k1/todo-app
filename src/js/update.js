@@ -114,14 +114,6 @@ export function update(event, eventType, { state, activeTodos, store }) {
           createTodos(newTodoList);
           store.push(newTodoList);
 
-          const a = todoListsContainer.querySelector(
-            `#todo-list li a#todos-${newTodoList.id}`
-          );
-
-          a.addEventListener('click', (event) => {
-            todoApp.state = update(event, 'linkClicked', todoApp);
-          });
-
           addTodoListForm.classList.remove('activeForm');
 
           return 'showingTodoLists';
