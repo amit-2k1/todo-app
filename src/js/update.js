@@ -20,6 +20,14 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
         case 'linkClicked': {
           const id = parseInt(event.target.id.split('-')[1]);
 
+          if (id === NaN) {
+            return {
+              state: 'showingTodoLists',
+              activeTodos: newActiveTodos,
+              todosLists: newTodosLists
+            };
+          }
+
           if (isActiveContainer(todoListsContainer)) {
             todoListsContainer.classList.remove('activeContainer');
           }
@@ -52,7 +60,13 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
     case 'showingTodos': {
       switch (eventType) {
         case 'backBtnClicked': {
-          if (isActiveContainer(todosContainer)) {
+          if (!isActiveContainer(todosContainer) && !newActiveTodos) {
+            return {
+              state: 'showingTodos',
+              activeTodos: newActiveTodos,
+              todosLists: newTodosLists
+            };
+          } else {
             todosContainer.classList.remove('activeContainer');
             todosEles[newActiveTodos].classList.remove('activeTodos');
             newActiveTodos = -1;
