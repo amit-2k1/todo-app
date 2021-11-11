@@ -1,8 +1,7 @@
 import { isActiveContainer } from './utils';
 import { createTodoLists, createTodos } from './init';
-import todoApp from './store';
 
-export function update(event, eventType, { state, activeTodos, store }) {
+export function update(event, eventType, { state, activeTodos, todosLists }) {
   const todoListsContainer = document.querySelector('#todo-lists-container');
   const todosContainer = document.querySelector('#todos-container');
   const todosEles = document.querySelectorAll('.todos ul');
@@ -11,7 +10,11 @@ export function update(event, eventType, { state, activeTodos, store }) {
   );
   const addTodoForm = todosContainer.querySelector('#add-todo-form');
 
-  switch (state) {
+  let newState = state;
+  let newActiveTodos = activeTodos;
+  let newTodosLists = todosLists;
+
+  switch (newState) {
     case 'showingTodoLists': {
       switch (eventType) {
         case 'linkClicked': {
@@ -24,17 +27,25 @@ export function update(event, eventType, { state, activeTodos, store }) {
           if (!isActiveContainer(todosContainer)) {
             todosContainer.classList.add('activeContainer');
             todosEles[id].classList.add('activeTodos');
-            todoApp.activeTodos = id;
+            newActiveTodos = id;
           }
 
-          return 'showingTodos';
+          return {
+            state: 'showingTodos',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
         case 'addListBtnClicked': {
           if (!addTodoListForm.classList.contains('activeForm')) {
             addTodoListForm.classList.add('activeForm');
           }
 
-          return 'showingAddListForm';
+          return {
+            state: 'showingAddListForm',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
       }
     }
@@ -43,57 +54,78 @@ export function update(event, eventType, { state, activeTodos, store }) {
         case 'backBtnClicked': {
           if (isActiveContainer(todosContainer)) {
             todosContainer.classList.remove('activeContainer');
-            todosEles[activeTodos].classList.remove('activeTodos');
-            todoApp.activeTodos = -1;
+            todosEles[newActiveTodos].classList.remove('activeTodos');
+            newActiveTodos = -1;
           }
 
           if (!isActiveContainer(todoListsContainer)) {
             todoListsContainer.classList.add('activeContainer');
           }
 
-          return 'showingTodoLists';
+          return {
+            state: 'showingTodoLists',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
         case 'addTodoBtnClicked': {
           if (!addTodoForm.classList.contains('activeForm')) {
             addTodoForm.classList.add('activeForm');
           }
 
-          return 'showingAddTodoForm';
+          return {
+            state: 'showingAddTodoForm',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
         case 'deleteTodoBtnClicked': {
           const ul = event.path[4];
           const li = event.path[3];
           const id = parseInt(li.id.split('-')[1]);
 
-          todoApp.store[id].todos = store[id].todos.filter(
+          newTodosLists[id].todos = newTodosLists[id].todos.filter(
             (_, index) => index != id
           );
 
           ul.removeChild(li);
 
-          console.log(todoApp.store[id].todos);
-          return 'showingTodos';
+          return {
+            state: 'showingTodos',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
         case 'tickTodoBtnClicked': {
           const li = event.path[3];
           const p = li.querySelector('p');
           const id = parseInt(li.id.split('-')[1]);
 
-          todoApp.store[id].todos.completed = !store[id].todos.completed;
+          newTodosLists[id].todos.completed =
+            !newTodosLists[id].todos.completed;
           p.classList.toggle('completed');
 
-          return 'showingTodos';
+          return {
+            state: 'showingTodos',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
       }
     }
     case 'showingAddListForm': {
       switch (eventType) {
         case 'closeBtnClicked': {
+          // closing the form
           if (addTodoListForm.classList.contains('activeForm')) {
             addTodoListForm.classList.remove('activeForm');
           }
 
-          return 'showingTodoLists';
+          return {
+            state: 'showingTodoLists',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
         case 'submitBtnClicked': {
           const listNameField =
@@ -104,35 +136,45 @@ export function update(event, eventType, { state, activeTodos, store }) {
             return 'showingTodoLists';
           }
 
-          const newTodoList = {
-            id: store.length,
+          const newTodosList = {
+            id: newTodosLists.length,
             listName: listName,
             todos: []
           };
 
-          createTodoLists([newTodoList]);
-          createTodos(newTodoList);
-          store.push(newTodoList);
+          createTodoLists([newTodosList]);
+          createTodos(newTodosList);
+          newTodosLists.push(newTodosList);
 
+          // closing the form after the new todo list added
           addTodoListForm.classList.remove('activeForm');
 
-          return 'showingTodoLists';
+          return {
+            state: 'showingTodoLists',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
       }
     }
     case 'showingAddTodoForm': {
       switch (eventType) {
         case 'closeBtnClicked': {
+          // closing the form
           if (addTodoForm.classList.contains('activeForm')) {
             addTodoForm.classList.remove('activeForm');
           }
 
-          return 'showingTodos';
+          return {
+            state: 'showingTodos',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
         case 'submitBtnClicked': {
           const todoField = addTodoForm.querySelector('#todo-field');
           const todo = todoField.value;
-          console.log(activeTodos);
+
           if (!todo) {
             return 'showingTodoLists';
           }
@@ -142,12 +184,17 @@ export function update(event, eventType, { state, activeTodos, store }) {
             completed: false
           };
 
-          todoApp.store[activeTodos].todos.push(newTodo);
-          createTodos(todoApp.store[activeTodos]);
+          newTodosLists[activeTodos].todos.push(newTodo);
+          createTodos(newTodosLists[activeTodos]);
 
+          // closing the form after the new todo added
           addTodoForm.classList.remove('activeForm');
 
-          return 'showingTodos';
+          return {
+            state: 'showingTodos',
+            activeTodos: newActiveTodos,
+            todosLists: newTodosLists
+          };
         }
       }
     }

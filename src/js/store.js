@@ -1,7 +1,7 @@
-const todoApp = {
+const store = {
   state: 'showingTodoLists',
   activeTodos: -1,
-  store: [
+  todosLists: [
     {
       id: 0,
       listName: 'school',
@@ -60,7 +60,12 @@ const todoApp = {
         }
       ]
     }
-  ]
+  ],
+  setStore: function (newStore) {
+    this.state = newStore.state;
+    this.activeTodos = newStore.activeTodos;
+    this.todosLists = newStore.todosLists;
+  }
 };
 
-export default todoApp;
+export default store;

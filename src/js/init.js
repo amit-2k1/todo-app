@@ -1,4 +1,4 @@
-import todoApp from './store';
+import store from './store';
 import { update } from './update';
 
 export function createTodoLists(todoStore) {
@@ -16,8 +16,9 @@ export function createTodoLists(todoStore) {
     li.setAttribute('id', 'list-' + todo.id);
     a.setAttribute('id', 'todos-' + todo.id);
 
+    // trigger event when todo list clicked
     a.addEventListener('click', (event) => {
-      todoApp.state = update(event, 'linkClicked', todoApp);
+      store.setStore(update(event, 'linkClicked', store));
     });
 
     p.textContent = todo.listName;
@@ -45,18 +46,19 @@ export function createTodos({ todos, id }) {
   const liTemplate = todosTemplate.content.querySelector('li');
 
   todos.forEach((todo, index) => {
-    console.log(todo);
     const li = document.importNode(liTemplate, true);
     const p = li.querySelector('p');
 
     const deleteTodoBtns = li.querySelector('.todo-btns .delete-btn');
     const tickTodoBtns = li.querySelector('.todo-btns .tick-btn');
 
+    // trigger event when delete btn clicked
     deleteTodoBtns.addEventListener('click', (event) => {
-      todoApp.state = update(event, 'deleteTodoBtnClicked', todoApp);
+      store.setStore(update(event, 'deleteTodoBtnClicked', store));
     });
+    // triggeer event when tick btn clicked
     tickTodoBtns.addEventListener('click', (event) => {
-      todoApp.state = update(event, 'tickTodoBtnClicked', todoApp);
+      store.setStore(update(event, 'tickTodoBtnClicked', store));
     });
 
     li.setAttribute('id', 'todo-' + index);

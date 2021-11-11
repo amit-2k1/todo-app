@@ -2,20 +2,19 @@ require('../css/style.css');
 require('../css/index.css');
 require('../css/form.css');
 
-import todoApp from './store';
+import store from './store';
 import { createTodoLists, createTodos } from './init';
 import { update } from './update';
 
 // Loading all todo lists
-createTodoLists(todoApp.store);
+createTodoLists(store.todosLists);
 // Loading all todos in DOM
-todoApp.store.forEach((todos) => {
+store.todosLists.forEach((todos) => {
   createTodos(todos);
 });
 
 const todoListsContainer = document.querySelector('#todo-lists-container');
 const todosContainer = document.querySelector('#todos-container');
-const todoListLinks = document.querySelectorAll('#todo-list li a');
 const backBtn = todosContainer.querySelector('button.back-btn');
 const addTodoListBtn = todoListsContainer.querySelector('.add-todo-list-btn');
 const addTodoListForm = todoListsContainer.querySelector('#add-todo-list-form');
@@ -29,25 +28,25 @@ const addTodoListSubmitBtn = addTodoListForm.querySelector(
 const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
 
 backBtn.addEventListener('click', (event) => {
-  todoApp.state = update(event, 'backBtnClicked', todoApp);
+  store.setStore(update(event, 'backBtnClicked', store));
 });
 
 addTodoListBtn.addEventListener('click', (event) => {
-  todoApp.state = update(event, 'addListBtnClicked', todoApp);
+  store.setStore(update(event, 'addListBtnClicked', store));
 });
 closeTodoListFormBtn.addEventListener('click', (event) => {
-  todoApp.state = update(event, 'closeBtnClicked', todoApp);
+  store.setStore(update(event, 'closeBtnClicked', store));
 });
 openAddTodoFormBtn.addEventListener('click', (event) => {
-  todoApp.state = update(event, 'addTodoBtnClicked', todoApp);
+  store.setStore(update(event, 'addTodoBtnClicked', store));
 });
 closeTodoFormBtn.addEventListener('click', (event) => {
-  todoApp.state = update(event, 'closeBtnClicked', todoApp);
+  store.setStore(update(event, 'closeBtnClicked', store));
 });
 
 addTodoListSubmitBtn.addEventListener('click', (event) => {
-  todoApp.state = update(event, 'submitBtnClicked', todoApp);
+  store.setStore(update(event, 'submitBtnClicked', store));
 });
 addTodoSubmitBtn.addEventListener('click', (event) => {
-  todoApp.state = update(event, 'submitBtnClicked', todoApp);
+  store.setStore(update(event, 'submitBtnClicked', store));
 });
