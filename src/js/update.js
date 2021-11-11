@@ -60,7 +60,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
     case 'showingTodos': {
       switch (eventType) {
         case 'backBtnClicked': {
-          if (!isActiveContainer(todosContainer) && !newActiveTodos) {
+          if (!isActiveContainer(todosContainer) && newActiveTodos === -1) {
             return {
               state: 'showingTodos',
               activeTodos: newActiveTodos,

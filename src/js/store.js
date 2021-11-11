@@ -1,6 +1,9 @@
 const store = {
   state: 'showingTodoLists',
   activeTodos: -1,
+  user: {
+    name: null
+  },
   todosLists: [
     {
       id: 0,
@@ -65,6 +68,9 @@ const store = {
     this.state = newStore.state;
     this.activeTodos = newStore.activeTodos;
     this.todosLists = newStore.todosLists;
+  },
+  setName: function (newName) {
+    this.user.name = newName;
   }
 };
 
