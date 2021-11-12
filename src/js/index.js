@@ -6,6 +6,7 @@ import store from './store';
 import { createTodoLists, createTodos } from './init';
 import { update } from './update';
 
+store.createStore();
 // Loading all todo lists
 createTodoLists(store.todosLists);
 // Loading all todos in DOM

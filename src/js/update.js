@@ -66,11 +66,11 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             };
-          } else {
-            todosContainer.classList.remove('activeContainer');
-            todosEles[newActiveTodos].classList.remove('activeTodos');
-            newActiveTodos = -1;
           }
+
+          todosContainer.classList.remove('activeContainer');
+          todosEles[newActiveTodos].classList.remove('activeTodos');
+          newActiveTodos = -1;
 
           if (!isActiveContainer(todoListsContainer)) {
             todoListsContainer.classList.add('activeContainer');
@@ -147,7 +147,11 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           const listName = listNameField.value;
 
           if (!listName) {
-            return 'showingTodoLists';
+            return {
+              state: 'showingTodoLists',
+              activeTodos: newActiveTodos,
+              todosLists: newTodosLists
+            };
           }
 
           const newTodosList = {
@@ -190,7 +194,11 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           const todo = todoField.value;
 
           if (!todo) {
-            return 'showingTodoLists';
+            return {
+              state: 'showingTodoLists',
+              activeTodos: newActiveTodos,
+              todosLists: newTodosLists
+            };
           }
 
           const newTodo = {
