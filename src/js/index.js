@@ -14,7 +14,6 @@ store.todosLists.forEach((todos) => {
   createTodos(todos);
 });
 
-const profileNameEle = document.querySelector('#profile-name');
 const todoListsContainer = document.querySelector('#todo-lists-container');
 const todosContainer = document.querySelector('#todos-container');
 const backBtn = todosContainer.querySelector('button.back-btn');
@@ -28,16 +27,6 @@ const addTodoListSubmitBtn = addTodoListForm.querySelector(
   '.add-list-submit-btn'
 );
 const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
-
-if (!store.user.name) {
-  let name;
-  do {
-    name = prompt('Enter your name : ');
-  } while (!name);
-
-  store.setName(name);
-  profileNameEle.textContent = store.user.name;
-}
 
 backBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'backBtnClicked', store));
