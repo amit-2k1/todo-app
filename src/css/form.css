@@ -61,8 +61,11 @@
   cursor: pointer;
 }
 
-#add-todo-form.activeForm.overlay-form,
-#add-todo-list-form.activeForm.overlay-form {
+#user-form.activeForm {
+  height: 100vh;
+}
+
+.overlay-form.activeForm {
   z-index: 2;
   opacity: 1;
   top: 0px;

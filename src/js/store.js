@@ -51,6 +51,11 @@ const store = {
     this.state = state;
     this.activeTodos = activeTodos;
     this.todosLists = todosLists;
+
+    if (this.user.name) {
+      const usernameEle = document.querySelector('#profile #profile-name');
+      usernameEle.textContent = store.user.name;
+    }
   },
   createLocalStorage: function () {
     localStorage.setItem('haveLocalStorage', true);
@@ -70,10 +75,10 @@ const store = {
     localStorage.setItem('activeTodos', this.activeTodos);
     localStorage.setItem('todosLists', JSON.stringify(this.todosLists));
   },
-  setUser: function (newName) {
-    this.user.name = newName;
+  setUser: function (newUser) {
+    this.user.name = newUser.name;
 
-    JSON.parse(localStorage.getItem('user')).name = newName;
+    localStorage.setItem('user', JSON.stringify(this.user));
   },
   logLocalStorage() {
     const user = JSON.parse(localStorage.getItem('user'));

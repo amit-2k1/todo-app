@@ -3,7 +3,7 @@ require('../css/index.css');
 require('../css/form.css');
 
 import store from './store';
-import { createTodoLists, createTodos } from './init';
+import { createUser, createTodoLists, createTodos } from './init';
 import { update } from './update';
 
 store.createStore();
@@ -13,6 +13,11 @@ createTodoLists(store.todosLists);
 store.todosLists.forEach((todos) => {
   createTodos(todos);
 });
+
+if (!store.user.name) {
+  const userForm = document.querySelector('#user-form');
+  userForm.classList.add('activeForm');
+}
 
 const todoListsContainer = document.querySelector('#todo-lists-container');
 const todosContainer = document.querySelector('#todos-container');
@@ -27,6 +32,11 @@ const addTodoListSubmitBtn = addTodoListForm.querySelector(
   '.add-list-submit-btn'
 );
 const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
+const addUserBtn = document.querySelector('.add-user-btn');
+
+addUserBtn.addEventListener('click', (event) => {
+  store.setUser(createUser(event, store));
+});
 
 backBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'backBtnClicked', store));
