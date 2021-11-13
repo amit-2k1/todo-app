@@ -124,6 +124,7 @@ h1 a {
 .todo p.completed {
   text-decoration: line-through;
   color: #bebebe;
+  font-style: italic;
 }
 
 .todo p.completed + .todo-btns .tick-btn {
