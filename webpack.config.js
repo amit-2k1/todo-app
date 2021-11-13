@@ -8,7 +8,7 @@ let target = 'web';
 
 if (process.env.NODE_ENV === 'production') {
   mode = 'production';
-  target = 'browserlist';
+  target = 'browserslist';
 }
 
 module.exports = {
