@@ -1,5 +1,6 @@
 import store from './store';
 import { update } from './update';
+import uniqid from 'uniqid';
 
 export function createTodoLists(todoStore) {
   const todoListContainer = document.querySelector('ul#todo-list');
@@ -8,20 +9,20 @@ export function createTodoLists(todoStore) {
   );
   const liTemplate = todoListTemplate.content.querySelector('.item');
 
-  todoStore.forEach((todo) => {
+  todoStore.forEach(({ id, listName }) => {
     const li = document.importNode(liTemplate, true);
     const a = li.querySelector('a');
     const p = a.querySelector('a p');
 
-    li.setAttribute('id', 'list-' + todo.id);
-    a.setAttribute('id', 'todos-' + todo.id);
+    li.setAttribute('id', id);
+    a.setAttribute('id', id);
 
     // trigger event when todo list clicked
     a.addEventListener('click', (event) => {
       store.setStore(update(event, 'linkClicked', store));
     });
 
-    p.textContent = todo.listName;
+    p.textContent = listName;
 
     todoListContainer.appendChild(li);
   });
@@ -32,20 +33,20 @@ export function createTodos({ todos, id }) {
   const todosContainer = document.querySelector('div.todos');
 
   let ul = document.createElement('ul');
-  const oldUl = todosContainer.querySelector(`#todos-${id}`);
+  const oldUl = todosContainer.querySelector(`#${id}`);
 
   if (oldUl) {
     const lis = oldUl.querySelectorAll('.todo');
     lis.forEach((li) => oldUl.removeChild(li));
     ul = oldUl;
   } else {
-    ul.setAttribute('id', 'todos-' + id);
+    ul.setAttribute('id', id);
     todosContainer.appendChild(ul);
   }
 
   const liTemplate = todosTemplate.content.querySelector('li');
 
-  todos.forEach((todo, index) => {
+  todos.forEach(({ id, content, completed }) => {
     const li = document.importNode(liTemplate, true);
     const p = li.querySelector('p');
 
@@ -61,9 +62,14 @@ export function createTodos({ todos, id }) {
       store.setStore(update(event, 'tickTodoBtnClicked', store));
     });
 
-    li.setAttribute('id', 'todo-' + index);
-    p.setAttribute('class', todo.completed ? 'completed' : '');
-    p.textContent = todo.content;
+    let todoId;
+
+    if (!id) todoId = uniqid();
+    else todoId = id;
+
+    li.setAttribute('id', todoId);
+    p.setAttribute('class', completed ? 'completed' : '');
+    p.textContent = content;
 
     ul.appendChild(li);
   });

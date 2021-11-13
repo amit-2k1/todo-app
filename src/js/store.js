@@ -1,27 +1,31 @@
 const store = {
   state: 'showingTodoLists',
-  activeTodos: -1,
+  activeTodos: null,
   user: {
     name: null
   },
   todosLists: [
     {
-      id: 0,
+      id: 'todos1',
       listName: 'click me to see all todos inside me',
       todos: [
         {
+          id: 'todo1',
           content: 'go back to todo list by clicking <- button',
           completed: false
         },
         {
+          id: 'todo2',
           content: 'make new todo list and todo by clicking + button',
           completed: false
         },
         {
+          id: 'todo3',
           content: 'mark todo as completed by clicking tick button',
           completed: false
         },
         {
+          id: 'todo4',
           content: 'delete todo by clicking red cross button',
           completed: false
         }

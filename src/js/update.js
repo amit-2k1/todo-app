@@ -1,5 +1,6 @@
 import { isActiveContainer } from './utils';
 import { createTodoLists, createTodos } from './init';
+import uniqid from 'uniqid';
 
 export function update(event, eventType, { state, activeTodos, todosLists }) {
   const todoListsContainer = document.querySelector('#todo-lists-container');
@@ -18,9 +19,11 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
     case 'showingTodoLists': {
       switch (eventType) {
         case 'linkClicked': {
-          const id = parseInt(event.target.id.split('-')[1]);
+          const id = event.target.id;
+          const todosListEle = todoListsContainer.querySelector(`#${id}`);
+          const todosEle = todosContainer.querySelector(`#${id}`);
 
-          if (id === NaN) {
+          if (!todosListEle) {
             return {
               state: 'showingTodoLists',
               activeTodos: newActiveTodos,
@@ -34,7 +37,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
 
           if (!isActiveContainer(todosContainer)) {
             todosContainer.classList.add('activeContainer');
-            todosEles[id].classList.add('activeTodos');
+            todosEle.classList.add('activeTodos');
             newActiveTodos = id;
           }
 
@@ -60,7 +63,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
     case 'showingTodos': {
       switch (eventType) {
         case 'backBtnClicked': {
-          if (!isActiveContainer(todosContainer) && newActiveTodos === -1) {
+          if (!isActiveContainer(todosContainer) && !newActiveTodos) {
             return {
               state: 'showingTodos',
               activeTodos: newActiveTodos,
@@ -68,9 +71,13 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             };
           }
 
+          const curActiveContainer = todosContainer.querySelector(
+            `#${newActiveTodos}`
+          );
+
           todosContainer.classList.remove('activeContainer');
-          todosEles[newActiveTodos].classList.remove('activeTodos');
-          newActiveTodos = -1;
+          curActiveContainer.classList.remove('activeTodos');
+          newActiveTodos = null;
 
           if (!isActiveContainer(todoListsContainer)) {
             todoListsContainer.classList.add('activeContainer');
@@ -96,11 +103,15 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
         case 'deleteTodoBtnClicked': {
           const ul = event.path[4];
           const li = event.path[3];
-          const id = parseInt(li.id.split('-')[1]);
+          const todoId = newActiveTodos;
 
-          newTodosLists[id].todos = newTodosLists[id].todos.filter(
-            (_, index) => index != id
+          const listIndex = newTodosLists.findIndex(
+            ({ id }) => id === newActiveTodos
           );
+
+          newTodosLists[listIndex].todos = newTodosLists[
+            listIndex
+          ].todos.filter(({ id }) => id != todoId);
 
           ul.removeChild(li);
 
@@ -113,10 +124,17 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
         case 'tickTodoBtnClicked': {
           const li = event.path[3];
           const p = li.querySelector('p');
-          const id = parseInt(li.id.split('-')[1]);
+          const todoId = li.id;
 
-          newTodosLists[id].todos.completed =
-            !newTodosLists[id].todos.completed;
+          const listIndex = newTodosLists.findIndex(
+            ({ id }) => id === newActiveTodos
+          );
+          const todoIndex = newTodosLists[listIndex].todos.findIndex(
+            ({ id }) => id === todoId
+          );
+
+          newTodosLists[listIndex].todos[todoIndex].completed =
+            !newTodosLists[listIndex].todos[todoIndex].completed;
           p.classList.toggle('completed');
 
           return {
@@ -155,7 +173,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           }
 
           const newTodosList = {
-            id: newTodosLists.length,
+            id: uniqid(),
             listName: listName,
             todos: []
           };
@@ -202,12 +220,15 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           }
 
           const newTodo = {
+            id: uniqid(),
             content: todo,
             completed: false
           };
 
-          newTodosLists[activeTodos].todos.push(newTodo);
-          createTodos(newTodosLists[activeTodos]);
+          const id = newTodosLists.findIndex(({ id }) => id === newActiveTodos);
+
+          newTodosLists[id].todos.push(newTodo);
+          createTodos(newTodosLists[id]);
 
           // closing the form after the new todo added
           addTodoForm.classList.remove('activeForm');
