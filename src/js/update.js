@@ -5,7 +5,6 @@ import uniqid from 'uniqid';
 export function update(event, eventType, { state, activeTodos, todosLists }) {
   const todoListsContainer = document.querySelector('#todo-lists-container');
   const todosContainer = document.querySelector('#todos-container');
-  const todosEles = document.querySelectorAll('.todos ul');
   const addTodoListForm = todoListsContainer.querySelector(
     '#add-todo-list-form'
   );
@@ -19,7 +18,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
     case 'showingTodoLists': {
       switch (eventType) {
         case 'linkClicked': {
-          const id = event.target.id;
+          const id = event.currentTarget.id;
           const todosListEle = todoListsContainer.querySelector(`#${id}`);
           const todosEle = todosContainer.querySelector(`#${id}`);
 
@@ -101,9 +100,10 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           };
         }
         case 'deleteTodoBtnClicked': {
-          const ul = event.path[4];
-          const li = event.path[3];
-          const todoId = newActiveTodos;
+          const path = event.path || event.composedPath();
+          const ul = path[4];
+          const li = path[3];
+          const todoId = li.id;
 
           const listIndex = newTodosLists.findIndex(
             ({ id }) => id === newActiveTodos
@@ -122,7 +122,8 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           };
         }
         case 'tickTodoBtnClicked': {
-          const li = event.path[3];
+          const path = event.path || event.composedPath();
+          const li = path[3];
           const p = li.querySelector('p');
           const todoId = li.id;
 

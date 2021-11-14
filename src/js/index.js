@@ -45,12 +45,15 @@ backBtn.addEventListener('click', (event) => {
 addTodoListBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'addListBtnClicked', store));
 });
+
 closeTodoListFormBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'closeBtnClicked', store));
 });
+
 openAddTodoFormBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'addTodoBtnClicked', store));
 });
+
 closeTodoFormBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'closeBtnClicked', store));
 });
@@ -58,6 +61,7 @@ closeTodoFormBtn.addEventListener('click', (event) => {
 addTodoListSubmitBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'submitBtnClicked', store));
 });
+
 addTodoSubmitBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'submitBtnClicked', store));
 });
