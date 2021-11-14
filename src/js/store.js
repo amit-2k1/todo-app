@@ -76,6 +76,8 @@ const store = {
     localStorage.setItem('todosLists', JSON.stringify(this.todosLists));
   },
   setUser: function (newUser) {
+    if (!newUser) return null;
+
     this.user.name = newUser.name;
 
     localStorage.setItem('user', JSON.stringify(this.user));

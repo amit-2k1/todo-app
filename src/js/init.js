@@ -8,7 +8,7 @@ export function createUser(event, store) {
   let username = form.querySelector('#username-field').value;
 
   if (!username) {
-    username = 'Anonymous';
+    return null;
   }
 
   form.classList.remove('activeForm');
