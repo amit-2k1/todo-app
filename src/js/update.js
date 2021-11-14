@@ -165,6 +165,8 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             addTodoListForm.querySelector('#list-name-field');
           const listName = listNameField.value;
 
+          listNameField.value = '';
+
           if (!listName) {
             return {
               state: 'showingTodoLists',
@@ -211,6 +213,8 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
         case 'submitBtnClicked': {
           const todoField = addTodoForm.querySelector('#todo-field');
           const todo = todoField.value;
+
+          todoField.value = '';
 
           if (!todo) {
             return {
