@@ -1,4 +1,3 @@
-import { isActiveContainer } from './utils';
 import { createTodoLists, createTodos } from './init';
 import uniqid from 'uniqid';
 
@@ -30,11 +29,11 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             };
           }
 
-          if (isActiveContainer(todoListsContainer)) {
+          if (todoListsContainer.classList.contains('activeContainer')) {
             todoListsContainer.classList.remove('activeContainer');
           }
 
-          if (!isActiveContainer(todosContainer)) {
+          if (!todosContainer.classList.contains('activeContainer')) {
             todosContainer.classList.add('activeContainer');
             todosEle.classList.add('activeTodos');
             newActiveTodos = id;
@@ -62,7 +61,10 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
     case 'showingTodos': {
       switch (eventType) {
         case 'backBtnClicked': {
-          if (!isActiveContainer(todosContainer) && !newActiveTodos) {
+          if (
+            !todosContainer.classList.contains('activeContainer') &&
+            !newActiveTodos
+          ) {
             return {
               state: 'showingTodos',
               activeTodos: newActiveTodos,
@@ -78,7 +80,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           curActiveContainer.classList.remove('activeTodos');
           newActiveTodos = null;
 
-          if (!isActiveContainer(todoListsContainer)) {
+          if (!todoListsContainer.classList.contains('activeContainer')) {
             todoListsContainer.classList.add('activeContainer');
           }
 
