@@ -38,7 +38,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html')
+      template: path.resolve(__dirname, './src/index.html'),
+      favicon: path.resolve(__dirname, './src/public/favicon.ico')
     }),
     new MiniCssExtractPlugin({
       filename: 'style.css'
