@@ -14,7 +14,7 @@
 
     <section class="container">
       <h2>Sign Up</h2>
-      <form id="login-form" class="form" action="#">
+      <form id="signup-form" class="form" action="#">
         <div class="field">
           <label for="name">Name</label>
           <input
@@ -23,6 +23,7 @@
             name="name"
             autocomplete="off"
             placeholder="Enter your name"
+            required
           />
           <small class="info"></small>
         </div>
@@ -34,17 +35,19 @@
             name="email"
             autocomplete="off"
             placeholder="Enter your email"
+            required
           />
           <small class="info"></small>
         </div>
         <div class="field">
           <label for="pass">Password</label>
           <input
-            id="pass"
+            id="password"
             type="password"
             name="password"
             autocomplete="off"
             placeholder="Enter your password"
+            required
           />
           <small class="info"></small>
         </div>

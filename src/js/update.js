@@ -171,7 +171,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
 
           if (!listName) {
             return {
-              state: 'showingTodoLists',
+              state: 'showingAddListForm',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             };
@@ -220,7 +220,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
 
           if (!todo) {
             return {
-              state: 'showingTodoLists',
+              state: 'showingAddTodoForm',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             };

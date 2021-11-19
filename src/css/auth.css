@@ -6,13 +6,14 @@ header h5 a {
   font-size: 1rem;
   letter-spacing: 0.5px;
   padding: inherit;
-  background-color: #00db92;
+  border: white 2px solid;
   color: white;
   border-radius: 5px;
 }
 
 header h5 a:hover {
-  background-color: #0fa;
+  background-color: white;
+  color: #7dedff;
 }
 
 .container {
@@ -76,14 +77,15 @@ form {
   background-color: #a2f3ff;
 }
 
-.info {
-  display: none;
-}
-
-.info.error {
-  background-color: #ff2e2e;
+input.error {
+  border: 2px #ff2e2e solid;
 }
 
 input.success {
-  border: 2px #0fa solid;
+  border: 2px #00db92 solid;
+}
+
+.info {
+  font-size: 0.75rem;
+  color: #ff2e2e;
 }
