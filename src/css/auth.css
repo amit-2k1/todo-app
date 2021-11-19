@@ -1,0 +1,89 @@
+header h5 {
+  padding: 0.5rem;
+}
+
+header h5 a {
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  padding: inherit;
+  background-color: #00db92;
+  color: white;
+  border-radius: 5px;
+}
+
+header h5 a:hover {
+  background-color: #0fa;
+}
+
+.container {
+  margin: 10vh auto;
+  width: 30vw;
+  height: 100%;
+  min-width: 350px;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 1px #cfcece;
+}
+
+.container h2 {
+  font-size: 2rem;
+  padding: 0.5rem;
+  text-align: center;
+  color: white;
+  background-color: #7dedff;
+}
+
+form {
+  height: 100%;
+}
+
+.field {
+  display: flex;
+  flex-flow: column;
+  padding: 0.25rem;
+  margin: 0.5rem;
+}
+
+.field > * {
+  margin-bottom: 0.25rem;
+  padding: 0.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.field input {
+  border: 2px #7dedff solid;
+  border-radius: 2px;
+}
+
+.sub-btn {
+  padding: 0.25rem;
+  margin: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sub-btn button {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  color: white;
+  font-weight: 400;
+  background-color: #7dedff;
+  border-radius: 2px;
+}
+
+.sub-btn button:hover {
+  background-color: #a2f3ff;
+}
+
+.info {
+  display: none;
+}
+
+.info.error {
+  background-color: #ff2e2e;
+}
+
+input.success {
+  border: 2px #0fa solid;
+}

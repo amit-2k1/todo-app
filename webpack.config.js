@@ -15,7 +15,15 @@ module.exports = {
   mode: mode,
   target: target,
 
-  entry: path.resolve(__dirname, './src/js/index.js'),
+  entry: {
+    main: path.resolve(__dirname, 'src/js/index.js'),
+    login: path.resolve(__dirname, 'src/js/login.js'),
+    signup: path.resolve(__dirname, 'src/js/signup.js')
+  },
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'js/[name].js'
+  },
   module: {
     rules: [
       {
@@ -32,17 +40,26 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js']
   },
-  output: {
-    path: path.resolve(__dirname, './dist')
-  },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
-      favicon: path.resolve(__dirname, './src/public/favicon.ico')
+      filename: 'index.html',
+      template: path.resolve(__dirname, 'src/index.html'),
+      favicon: path.resolve(__dirname, 'src/public/favicon.ico'),
+      chunks: ['main']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'page/signIn.html',
+      template: path.resolve(__dirname, 'src/page/signIn.html'),
+      chunks: ['login']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'page/signUp.html',
+      template: path.resolve(__dirname, 'src/page/signUp.html'),
+      chunks: ['signup']
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css'
+      filename: 'css/[name].css'
     })
   ],
   devtool: 'source-map',
