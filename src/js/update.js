@@ -103,8 +103,8 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
         }
         case 'deleteTodoBtnClicked': {
           const path = event.path || event.composedPath();
-          const ul = path[4];
-          const li = path[3];
+          const ul = path[4].tagName === 'UL' ? path[4] : path[3]; // getting container containing todo
+          const li = ul.querySelector('li');
           const todoId = li.id;
 
           const listIndex = newTodosLists.findIndex(
@@ -125,7 +125,7 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
         }
         case 'tickTodoBtnClicked': {
           const path = event.path || event.composedPath();
-          const li = path[3];
+          const li = path[3].tagName === 'UL' ? path[2] : path[3]; // getting the todo
           const p = li.querySelector('p');
           const todoId = li.id;
 
