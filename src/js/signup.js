@@ -8,7 +8,7 @@ const nameEl = signupFormEl.querySelector('#name');
 const emailEl = signupFormEl.querySelector('#email');
 const passwordEl = signupFormEl.querySelector('#password');
 
-signupFormEl.addEventListener('submit', function (e) {
+signupFormEl.addEventListener('submit', async function (e) {
   // prevent the form from submitting
   e.preventDefault();
 
@@ -20,7 +20,26 @@ signupFormEl.addEventListener('submit', function (e) {
   let isFormValid = isNameValid && isEmailValid && isPasswordValid;
 
   if (isFormValid) {
-    [nameEl.value, emailEl.value, passwordEl.value] = ['', '', ''];
+    const name = nameEl.value;
+    const email = emailEl.value;
+    const password = passwordEl.value;
+
+    window.history.pushState({ url: '/signup' });
+
+    const result = await fetch('/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user: {
+          name,
+          email,
+          password
+        }
+      })
+    }).then((res) => res);
+
+    // [nameEl.value, emailEl.value, passwordEl.value] = ['', '', ''];
+
     console.log('Signup Form Submitted.');
   }
 });

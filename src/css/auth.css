@@ -1,3 +1,30 @@
+.pop-up {
+  border-radius: 10px;
+  position: absolute;
+  top: -100%;
+  right: 5vw;
+  width: 200px;
+  color: white;
+  padding: 0.5rem;
+  transition: top 1s ease-in-out;
+}
+
+.pop-up p {
+  text-align: center;
+}
+
+.user-exist {
+  background-color: #ff2e2e;
+}
+
+.new-user {
+  background-color: #00db92;
+}
+
+.activePopup {
+  top: 10vh;
+}
+
 header h5 {
   padding: 0.5rem;
 }

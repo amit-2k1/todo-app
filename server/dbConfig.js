@@ -10,8 +10,6 @@ const username = process.env.DB_USERNAME;
 const password = process.env.PASSWORD;
 const db_name = process.env.DB_NAME;
 
-console.log(password);
-
 const pool = new Pool({
   user: username,
   host: hostname,
