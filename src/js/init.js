@@ -2,23 +2,10 @@ import store from './store';
 import { update } from './update';
 import uniqid from 'uniqid';
 
-export function createUser(event, store) {
-  const form = document.querySelector('#user-form');
-  const usernameEle = document.querySelector('#profile #profile-name');
-  let username = form.querySelector('#username-field').value;
-
-  if (!username) {
-    return null;
-  }
-
-  form.classList.remove('activeForm');
-
-  usernameEle.textContent = username;
-
-  return {
-    name: username
-  };
-}
+export function renderUsername(name) {
+  const nameEl = document.querySelector('#profile-name')
+  nameEl.textContent = store.user.name;
+} 
 
 export function createTodoLists(todoStore) {
   const todoListContainer = document.querySelector('ul#todo-list');

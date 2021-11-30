@@ -3,7 +3,6 @@ require('../css/index.css');
 require('../css/form.css');
 
 import store from './store';
-import { createUser } from './init';
 import { update } from './update';
 
 store.createStore();
@@ -21,11 +20,6 @@ const addTodoListSubmitBtn = addTodoListForm.querySelector(
   '.add-list-submit-btn'
 );
 const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
-const addUserBtn = document.querySelector('.add-user-btn');
-
-addUserBtn.addEventListener('click', (event) => {
-  store.setUser(createUser(event, store));
-});
 
 backBtn.addEventListener('click', (event) => {
   store.setStore(update(event, 'backBtnClicked', store));
