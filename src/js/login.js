@@ -3,31 +3,37 @@ require('../css/auth.css');
 
 import { checkEmail, checkPassword, debounce } from './validate';
 
+const token = JSON.parse(localStorage.getItem('token'));
+
+if (token) window.location.href = '/'
+
 const params = new URLSearchParams(window.location.search);
+const errMsg = params.get('err');
+const successMsg = params.get('success');
 
-if (params.get('userExist')) {
-  setTimeout(() => {
-    document.querySelector('.user-exist').classList.add('activePopup');
+function showPopup(msg, type) {
+  const msgClass = type === 'error' ? 'err-msg' : 'success-msg';
+  if (msg) {
     setTimeout(() => {
-      document.querySelector('.user-exist').classList.remove('activePopup');
-    }, 5000);
-  }, 500);
+      const ele = document.querySelector('.pop-up');
+      ele.textContent = msg;
+      ele.classList.add(msgClass);
+      ele.classList.add('activePopup');
+      setTimeout(() => {
+        ele.classList.remove('activePopup');
+      }, 5000);
+    }, 500);
+  }
 }
 
-if (params.get('accCreated')) {
-  setTimeout(() => {
-    document.querySelector('.new-user').classList.add('activePopup');
-    setTimeout(() => {
-      document.querySelector('.new-user').classList.remove('activePopup');
-    }, 5000);
-  }, 500);
-}
+errMsg && showPopup(errMsg, 'error'); // if error present then popup displays
+successMsg && showPopup(successMsg, 'success'); // if account created then popup displays
 
 const loginFormEl = document.querySelector('#login-form');
 const emailEl = loginFormEl.querySelector('#email');
 const passwordEl = loginFormEl.querySelector('#password');
 
-loginFormEl.addEventListener('submit', function (e) {
+loginFormEl.addEventListener('submit', async (e) => {
   // prevent the form from submitting
   e.preventDefault();
 
@@ -38,9 +44,33 @@ loginFormEl.addEventListener('submit', function (e) {
   let isFormValid = isEmailValid && isPasswordValid;
 
   if (isFormValid) {
+    const email = emailEl.value;
+    const password = passwordEl.value;
+
+    const result = await fetch('/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user: {
+          email,
+          password
+        }
+      })
+    });
+
+    const { token, error } = await result.json();
+
+    if (error) {
+      showPopup(error, 'error');
+      return;
+    }
+
+    localStorage.setItem('token', JSON.stringify(token));
+
     [emailEl.value, passwordEl.value] = ['', ''];
 
-    console.log('Login Form Submitted');
+    // redirecting to user todo page
+    window.location.href = '/'
   }
 });
 

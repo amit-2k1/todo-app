@@ -3,21 +3,10 @@ require('../css/index.css');
 require('../css/form.css');
 
 import store from './store';
-import { createUser, createTodoLists, createTodos } from './init';
+import { createUser } from './init';
 import { update } from './update';
 
 store.createStore();
-// Loading all todo lists
-createTodoLists(store.todosLists);
-// Loading all todos in DOM
-store.todosLists.forEach((todos) => {
-  createTodos(todos);
-});
-
-if (!store.user.name) {
-  const userForm = document.querySelector('#user-form');
-  userForm.classList.add('activeForm');
-}
 
 const todoListsContainer = document.querySelector('#todo-lists-container');
 const todosContainer = document.querySelector('#todos-container');

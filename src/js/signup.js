@@ -24,8 +24,6 @@ signupFormEl.addEventListener('submit', async function (e) {
     const email = emailEl.value;
     const password = passwordEl.value;
 
-    window.history.pushState({ url: '/signup' });
-
     const result = await fetch('/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -36,11 +34,17 @@ signupFormEl.addEventListener('submit', async function (e) {
           password
         }
       })
-    }).then((res) => res);
+    });
 
-    // [nameEl.value, emailEl.value, passwordEl.value] = ['', '', ''];
+    // getting the response object
+    const user = await result.json();
 
-    console.log('Signup Form Submitted.');
+    // redirecting to login with message
+    if (user.error) {
+      window.location.href = `/signin?err=${user.error}`;
+    } else {
+      window.location.href = `/signin?success=${user.message}`;
+    }
   }
 });
 

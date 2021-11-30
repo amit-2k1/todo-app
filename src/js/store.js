@@ -1,9 +1,9 @@
+import { createTodoLists, createTodos } from './init';
+
 const store = {
   state: 'showingTodoLists',
   activeTodos: null,
-  user: {
-    name: null
-  },
+  user: {},
   todosLists: [
     {
       id: 'todos1',
@@ -32,30 +32,30 @@ const store = {
       ]
     }
   ],
-  createStore: function () {
-    const haveLocalStorage = localStorage.getItem('haveLocalStorage');
+  createStore: async function () {
+    const token = JSON.parse(localStorage.getItem('token'));
 
-    if (!haveLocalStorage) {
-      this.createLocalStorage();
-      return;
+    if (!token) window.location.href = '/signin'
+
+    const res = await fetch('/data', {
+    headers: {
+      'Authorization': 'Bearer ' + token
     }
+  })
+    
+    const { name, todosLists } = await res.json()
 
-    localStorage.setItem('state', 'showingTodoLists');
+    console.log(name, todosLists)
+    
+    this.setUser(name);
+    this.setTodosLists(todosLists);
 
-    const user = JSON.parse(localStorage.getItem('user'));
-    const state = localStorage.getItem('state');
-    const activeTodos = localStorage.getItem('activeTodos');
-    const todosLists = JSON.parse(localStorage.getItem('todosLists'));
-
-    this.user = user;
-    this.state = state;
-    this.activeTodos = activeTodos;
-    this.todosLists = todosLists;
-
-    if (this.user.name) {
-      const usernameEle = document.querySelector('#profile #profile-name');
-      usernameEle.textContent = store.user.name;
-    }
+    // Loading all todo lists
+    createTodoLists(store.todosLists);
+    // Loading all todos in DOM
+    store.todosLists.forEach((todos) => {
+      createTodos(todos);
+});
   },
   createLocalStorage: function () {
     localStorage.setItem('haveLocalStorage', true);
@@ -64,23 +64,20 @@ const store = {
     localStorage.setItem('activeTodos', -1);
     localStorage.setItem('todosLists', JSON.stringify(this.todosLists));
   },
-  setStore: function (newStore) {
-    if (!newStore) return;
+  setTodosLists: function (todosLists) {
+    if (!todosLists) return;
 
-    this.state = newStore.state;
-    this.activeTodos = newStore.activeTodos;
-    this.todosLists = newStore.todosLists;
-
-    localStorage.setItem('state', this.state);
-    localStorage.setItem('activeTodos', this.activeTodos);
-    localStorage.setItem('todosLists', JSON.stringify(this.todosLists));
+    this.todosLists = todosLists;
   },
-  setUser: function (newUser) {
-    if (!newUser) return null;
+  setUser: function (newName) {
+    if (!newName) return null;
 
-    this.user.name = newUser.name;
-
-    localStorage.setItem('user', JSON.stringify(this.user));
+    this.user.name = newName;
+  },
+  setStore: function ({state, activeTodos, todosLists}) {
+    this.state = state;
+    this.activeTodos = activeTodos;
+    this.todosLists = todosLists;
   },
   logLocalStorage() {
     const user = JSON.parse(localStorage.getItem('user'));

@@ -7,17 +7,14 @@
   color: white;
   padding: 0.5rem;
   transition: top 1s ease-in-out;
-}
-
-.pop-up p {
   text-align: center;
 }
 
-.user-exist {
+.err-msg {
   background-color: #ff2e2e;
 }
 
-.new-user {
+.success-msg {
   background-color: #00db92;
 }
 
