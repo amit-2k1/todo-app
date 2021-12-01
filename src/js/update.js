@@ -1,7 +1,12 @@
 import { createTodoLists, createTodos } from './init';
 import uniqid from 'uniqid';
+import store from './store';
 
-export function update(event, eventType, { state, activeTodos, todosLists }) {
+export async function update(
+  event,
+  eventType,
+  { state, activeTodos, todosLists }
+) {
   const todoListsContainer = document.querySelector('#todo-lists-container');
   const todosContainer = document.querySelector('#todos-container');
   const addTodoListForm = todoListsContainer.querySelector(
@@ -22,11 +27,13 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           const todosEle = todosContainer.querySelector(`#${id}`);
 
           if (!todosListEle) {
-            return {
+            store.setStore({
               state: 'showingTodoLists',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
-            };
+            });
+
+            return;
           }
 
           if (todoListsContainer.classList.contains('activeContainer')) {
@@ -39,24 +46,21 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             newActiveTodos = id;
           }
 
-          return {
-            state: 'showingTodos',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          newState = 'showingTodos';
+
+          break;
         }
         case 'addListBtnClicked': {
           if (!addTodoListForm.classList.contains('activeForm')) {
             addTodoListForm.classList.add('activeForm');
           }
 
-          return {
-            state: 'showingAddListForm',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          newState = 'showingAddListForm';
+
+          break;
         }
       }
+      break;
     }
     case 'showingTodos': {
       switch (eventType) {
@@ -65,11 +69,13 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             !todosContainer.classList.contains('activeContainer') &&
             !newActiveTodos
           ) {
-            return {
+            store.setStore({
               state: 'showingTodos',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
-            };
+            });
+
+            return;
           }
 
           const curActiveContainer = todosContainer.querySelector(
@@ -84,26 +90,23 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             todoListsContainer.classList.add('activeContainer');
           }
 
-          return {
-            state: 'showingTodoLists',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          newState = 'showingTodoLists';
+
+          break;
         }
         case 'addTodoBtnClicked': {
           if (!addTodoForm.classList.contains('activeForm')) {
             addTodoForm.classList.add('activeForm');
           }
 
-          return {
-            state: 'showingAddTodoForm',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          newState = 'showingAddTodoForm';
+
+          break;
         }
         case 'deleteTodoBtnClicked': {
           const path = event.path || event.composedPath();
-          const ul = path[4].tagName === 'UL' ? path[4] : path[3]; // getting container containing todo
+          const ulIndex = path.findIndex(({ tagName }) => tagName === 'UL');
+          const ul = path[ulIndex];
           const li = ul.querySelector('li');
           const todoId = li.id;
 
@@ -117,15 +120,24 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
 
           ul.removeChild(li);
 
-          return {
-            state: 'showingTodos',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          const { message } = await fetch('/deletetodo', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              store: {
+                todoId: todoId
+              }
+            })
+          });
+
+          newState = 'showingTodos';
+
+          break;
         }
         case 'tickTodoBtnClicked': {
           const path = event.path || event.composedPath();
-          const li = path[3].tagName === 'UL' ? path[2] : path[3]; // getting the todo
+          const liIndex = path.findIndex(({ tagName }) => tagName === 'LI'); // get the li element Index
+          const li = path[liIndex];
           const p = li.querySelector('p');
           const todoId = li.id;
 
@@ -136,17 +148,30 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             ({ id }) => id === todoId
           );
 
-          newTodosLists[listIndex].todos[todoIndex].completed =
+          const completed =
             !newTodosLists[listIndex].todos[todoIndex].completed;
+
+          newTodosLists[listIndex].todos[todoIndex].completed = completed;
           p.classList.toggle('completed');
 
-          return {
-            state: 'showingTodos',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          const { message } = await fetch('/marktodo', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              store: {
+                todoId: todoId,
+                completed: completed
+              }
+            })
+          });
+
+          newState = 'showingTodos';
+
+          break;
         }
       }
+
+      break;
     }
     case 'showingAddListForm': {
       switch (eventType) {
@@ -156,11 +181,9 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             addTodoListForm.classList.remove('activeForm');
           }
 
-          return {
-            state: 'showingTodoLists',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          newState = 'showingTodoLists';
+
+          break;
         }
         case 'submitBtnClicked': {
           const listNameField =
@@ -170,11 +193,13 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           listNameField.value = '';
 
           if (!listName) {
-            return {
+            store.setStore({
               state: 'showingAddListForm',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
-            };
+            });
+
+            return;
           }
 
           const newTodosList = {
@@ -190,13 +215,27 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           // closing the form after the new todo list added
           addTodoListForm.classList.remove('activeForm');
 
-          return {
-            state: 'showingTodoLists',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          const { listId, message } = await fetch('/addtodolist', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: JSON.parse(localStorage.getItem('token'))
+            },
+            body: JSON.stringify({
+              store: {
+                listId: newTodosList.id,
+                listName: newTodosList.listName
+              }
+            })
+          });
+
+          newState = 'showingTodoLists';
+
+          break;
         }
       }
+
+      break;
     }
     case 'showingAddTodoForm': {
       switch (eventType) {
@@ -206,11 +245,9 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
             addTodoForm.classList.remove('activeForm');
           }
 
-          return {
-            state: 'showingTodos',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          newState = 'showingTodos';
+
+          break;
         }
         case 'submitBtnClicked': {
           const todoField = addTodoForm.querySelector('#todo-field');
@@ -219,11 +256,13 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           todoField.value = '';
 
           if (!todo) {
-            return {
+            store.setStore({
               state: 'showingAddTodoForm',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
-            };
+            });
+
+            return;
           }
 
           const newTodo = {
@@ -240,13 +279,34 @@ export function update(event, eventType, { state, activeTodos, todosLists }) {
           // closing the form after the new todo added
           addTodoForm.classList.remove('activeForm');
 
-          return {
-            state: 'showingTodos',
-            activeTodos: newActiveTodos,
-            todosLists: newTodosLists
-          };
+          const { todoId, message } = await fetch('/addtodo', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              store: {
+                todoId: newTodo.id,
+                content: newTodo.content,
+                completed: newTodo.completed,
+                listId: newTodosLists[id].id
+              }
+            })
+          });
+
+          newState = 'showingTodos';
+
+          break;
         }
       }
+
+      break;
     }
   }
+
+  store.setStore({
+    state: newState,
+    activeTodos: newActiveTodos,
+    todosLists: newTodosLists
+  });
 }

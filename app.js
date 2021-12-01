@@ -3,18 +3,15 @@ import chalk from 'chalk';
 import morgan from 'morgan';
 import path from 'path';
 import bodyParser from 'body-parser';
-import cons from 'consolidate';
 
 import { protect, signin, signup, getUserData } from './server/auth';
+import { addTodoList, addTodo, markTodo, deleteTodo } from './server/todo';
 
 const app = express();
 
 const PORT = process.env.SERVER_PORT || 5000;
 
 app.set('port', PORT);
-app.engine('html', cons.swig)
-app.set('views', path.join(__dirname, '/dist'));
-app.set('view engine', 'html');
 
 app.use(bodyParser.json());
 app.use(
@@ -48,6 +45,11 @@ app.get('/data', protect, getUserData, async (req, res, next) => {
     todosLists
   })
 });
+
+app.put('/addtodolist', addTodoList);
+app.put('/addtodo', addTodo);
+app.put('/marktodo', markTodo);
+app.put('/deletetodo', deleteTodo);
 
 
 app.post('/signin', signin);

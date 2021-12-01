@@ -7,37 +7,32 @@ const newToken = ({ id, name, email }) => {
   return jwt.sign({ id, name, email }, process.env.JWT_SECRET);
 };
 
-
 const formatTodos = (todos) => {
   const todosLists = [];
 
   todos.forEach(({ todo_list_id, name, content, is_completed, todo_id }) => {
-    const id = todosLists.findIndex(({ id }) => id === todo_list_id);
+    let id = todosLists.findIndex(({ id }) => id === todo_list_id);
 
     if (id === -1) {
       // creating new todo list
       const newList = {
         id: todo_list_id,
         listName: name,
-        todos: [
-          {
-            id: todo_id,
-            content,
-            completed: is_completed
-          }
-        ]
+        todos: []
       };
 
       // pushing it to new todosLists array
       todosLists.push(newList);
-    } else {
-      // pushing new todo to todosLists.todos array
-      todosLists[id].todos.push({
-        id: todo_id,
-        content,
-        completed: is_completed
-      });
+      id = todosLists.length - 1;
     }
+    if (!todo_id) return;
+
+    // pushing new todo to todosLists.todos array
+    todosLists[id].todos.push({
+      id: todo_id || '',
+      content: content || '',
+      completed: is_completed || false
+    });
   });
 
   return todosLists;
@@ -47,8 +42,9 @@ const getTodosLists = async (userId) => {
   let todos = [];
 
   try {
+    // getting all todo lists and their todos
     todos = await pool.query(
-      'SELECT * FROM todo_list NATURAL JOIN todo WHERE todo_list.user_id=$1;',
+      'SELECT * FROM todo RIGHT JOIN todo_list ON todo_list.todo_list_id = todo.todo_list_id WHERE todo_list.user_id=$1;',
       [userId]
     );
   } catch {
@@ -66,7 +62,7 @@ export const getUserData = async (req, res, next) => {
   req.todosLists = todosLists;
 
   next();
-} 
+};
 
 export const protect = async (req, res, next) => {
   const bearer = req.headers.authorization;
@@ -80,12 +76,12 @@ export const protect = async (req, res, next) => {
   try {
     // getting user data
     jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
-    if (err) {
-      throw err;
-    } else {
-      req.user = authData;
-    }
-  });
+      if (err) {
+        throw err;
+      } else {
+        req.user = authData;
+      }
+    });
     next();
   } catch (e) {
     return res.redirect('/signin');

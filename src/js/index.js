@@ -22,29 +22,29 @@ const addTodoListSubmitBtn = addTodoListForm.querySelector(
 const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
 
 backBtn.addEventListener('click', (event) => {
-  store.setStore(update(event, 'backBtnClicked', store));
+  update(event, 'backBtnClicked', store);
 });
 
 addTodoListBtn.addEventListener('click', (event) => {
-  store.setStore(update(event, 'addListBtnClicked', store));
+  update(event, 'addListBtnClicked', store);
 });
 
 closeTodoListFormBtn.addEventListener('click', (event) => {
-  store.setStore(update(event, 'closeBtnClicked', store));
+  update(event, 'closeBtnClicked', store);
 });
 
 openAddTodoFormBtn.addEventListener('click', (event) => {
-  store.setStore(update(event, 'addTodoBtnClicked', store));
+  update(event, 'addTodoBtnClicked', store);
 });
 
 closeTodoFormBtn.addEventListener('click', (event) => {
-  store.setStore(update(event, 'closeBtnClicked', store));
+  update(event, 'closeBtnClicked', store);
 });
 
 addTodoListSubmitBtn.addEventListener('click', (event) => {
-  store.setStore(update(event, 'submitBtnClicked', store));
+  update(event, 'submitBtnClicked', store);
 });
 
 addTodoSubmitBtn.addEventListener('click', (event) => {
-  store.setStore(update(event, 'submitBtnClicked', store));
+  update(event, 'submitBtnClicked', store);
 });

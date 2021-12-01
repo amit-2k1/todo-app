@@ -8,18 +8,16 @@ const store = {
   createStore: async function () {
     const token = JSON.parse(localStorage.getItem('token'));
 
-    if (!token) window.location.href = '/signin'
+    if (!token) window.location.href = '/signin';
 
     const res = await fetch('/data', {
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
-  })
-    
-    const { name, todosLists } = await res.json()
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    });
 
-    console.log(name, todosLists)
-    
+    const { name, todosLists } = await res.json();
+
     this.setUser(name);
     this.setTodosLists(todosLists);
 
@@ -29,9 +27,9 @@ const store = {
     store.todosLists.forEach((todos) => {
       createTodos(todos);
 
-    //display username
+      //display username
       renderUsername(name);
-});
+    });
   },
   setTodosLists: function (todosLists) {
     if (!todosLists) return;
@@ -43,11 +41,11 @@ const store = {
 
     this.user.name = newName;
   },
-  setStore: function ({state, activeTodos, todosLists}) {
+  setStore: function ({ state, activeTodos, todosLists }) {
     this.state = state;
     this.activeTodos = activeTodos;
     this.todosLists = todosLists;
-  },
+  }
 };
 
 export default store;

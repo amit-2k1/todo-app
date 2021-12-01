@@ -3,9 +3,9 @@ import { update } from './update';
 import uniqid from 'uniqid';
 
 export function renderUsername(name) {
-  const nameEl = document.querySelector('#profile-name')
+  const nameEl = document.querySelector('#profile-name');
   nameEl.textContent = store.user.name;
-} 
+}
 
 export function createTodoLists(todoStore) {
   const todoListContainer = document.querySelector('ul#todo-list');
@@ -24,7 +24,7 @@ export function createTodoLists(todoStore) {
 
     // trigger event when todo list clicked
     a.addEventListener('click', (event) => {
-      store.setStore(update(event, 'linkClicked', store));
+      update(event, 'linkClicked', store);
     });
 
     p.textContent = listName;
@@ -60,11 +60,11 @@ export function createTodos({ todos, id }) {
 
     // trigger event when delete btn clicked
     deleteTodoBtns.addEventListener('click', (event) => {
-      store.setStore(update(event, 'deleteTodoBtnClicked', store));
+      update(event, 'deleteTodoBtnClicked', store);
     });
     // triggeer event when tick btn clicked
     tickTodoBtns.addEventListener('click', (event) => {
-      store.setStore(update(event, 'tickTodoBtnClicked', store));
+      update(event, 'tickTodoBtnClicked', store);
     });
 
     let todoId;
