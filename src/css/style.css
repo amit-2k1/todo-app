@@ -59,3 +59,69 @@ h1 a {
   font-style: italic;
   font-weight: lighter;
 }
+
+.pop-up {
+  border-radius: 10px;
+  position: absolute;
+  top: -100%;
+  right: 5vw;
+  width: 200px;
+  color: white;
+  padding: 0.5rem;
+  transition: top 1s ease-in-out;
+  text-align: center;
+  z-index: 6;
+}
+
+.err-msg {
+  background-color: #ff2e2e;
+}
+
+.success-msg {
+  background-color: #00db92;
+}
+
+.activePopup {
+  top: 10vh;
+}
+
+#loader-container {
+  display: none;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  opacity: 0.6;
+  z-index: 5;
+  pointer-events: none;
+}
+
+#loader {
+  position: absolute;
+  border: 8px solid #00ddff;
+  border-left: 8px solid #f3f3f3;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#loader.activeLoader {
+  animation: spin 2s linear infinite;
+  opacity: 1;
+}
+
+#loader-container.activeContainer {
+  display: block;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(45vw, 45vh) rotate(0deg);
+  }
+  100% {
+    transform: translate(45vw, 45vh) rotate(360deg);
+  }
+}

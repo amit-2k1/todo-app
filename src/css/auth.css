@@ -1,27 +1,3 @@
-.pop-up {
-  border-radius: 10px;
-  position: absolute;
-  top: -100%;
-  right: 5vw;
-  width: 200px;
-  color: white;
-  padding: 0.5rem;
-  transition: top 1s ease-in-out;
-  text-align: center;
-}
-
-.err-msg {
-  background-color: #ff2e2e;
-}
-
-.success-msg {
-  background-color: #00db92;
-}
-
-.activePopup {
-  top: 10vh;
-}
-
 header h5 {
   padding: 0.5rem;
 }
