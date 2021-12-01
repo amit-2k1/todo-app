@@ -3,7 +3,7 @@ require('../css/index.css');
 require('../css/form.css');
 
 import store from './store';
-import { update } from './update';
+import { signout, update } from './update';
 
 store.createStore();
 
@@ -20,6 +20,7 @@ const addTodoListSubmitBtn = addTodoListForm.querySelector(
   '.add-list-submit-btn'
 );
 const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
+const singoutBtn = document.querySelector('.sign-out-btn');
 
 backBtn.addEventListener('click', (event) => {
   update(event, 'backBtnClicked', store);
@@ -48,3 +49,5 @@ addTodoListSubmitBtn.addEventListener('click', (event) => {
 addTodoSubmitBtn.addEventListener('click', (event) => {
   update(event, 'submitBtnClicked', store);
 });
+
+singoutBtn.addEventListener('click', signout);

@@ -5,7 +5,7 @@ import { checkEmail, checkPassword, debounce } from './validate';
 
 const token = JSON.parse(localStorage.getItem('token'));
 
-if (token) window.location.href = '/'
+if (token) window.location.href = '/';
 
 const params = new URLSearchParams(window.location.search);
 const errMsg = params.get('err');
@@ -70,7 +70,7 @@ loginFormEl.addEventListener('submit', async (e) => {
     [emailEl.value, passwordEl.value] = ['', ''];
 
     // redirecting to user todo page
-    window.location.href = '/'
+    window.location.href = '/';
   }
 });
 

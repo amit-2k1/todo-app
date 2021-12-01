@@ -310,3 +310,9 @@ export async function update(
     todosLists: newTodosLists
   });
 }
+
+export async function signout() {
+  localStorage.removeItem('token');
+
+  window.location.href = '/signin';
+}
