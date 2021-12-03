@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import morgan from 'morgan';
 import path from 'path';
 import bodyParser from 'body-parser';
+import favicon from 'serve-favicon';
 
 import { protect, signin, signup, getUserData } from './server/auth';
 import {
@@ -26,6 +27,7 @@ app.use(
   })
 );
 
+app.use(favicon(path.join(__dirname, '/dist/favicon.ico')));
 app.use('/css', express.static(path.join(__dirname, 'dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'dist/js')));
 app.use(morgan('tiny'));
