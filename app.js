@@ -5,7 +5,13 @@ import path from 'path';
 import bodyParser from 'body-parser';
 
 import { protect, signin, signup, getUserData } from './server/auth';
-import { addTodoList, addTodo, markTodo, deleteTodo } from './server/todo';
+import {
+  addTodoList,
+  addTodo,
+  markTodo,
+  deleteTodo,
+  deleteTodoList
+} from './server/todo';
 
 const app = express();
 
@@ -34,7 +40,7 @@ app.get('/signup', async (req, res, next) => {
 
 app.get('/', async (req, res) => {
   return res.sendFile(__dirname + '/dist/index.html');
-})
+});
 
 app.get('/data', protect, getUserData, async (req, res, next) => {
   const name = req.user.name;
@@ -43,14 +49,14 @@ app.get('/data', protect, getUserData, async (req, res, next) => {
   return res.json({
     name,
     todosLists
-  })
+  });
 });
 
 app.put('/addtodolist', addTodoList);
+app.put('/deletetodolist', deleteTodoList);
 app.put('/addtodo', addTodo);
 app.put('/marktodo', markTodo);
 app.put('/deletetodo', deleteTodo);
-
 
 app.post('/signin', signin);
 

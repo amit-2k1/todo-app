@@ -18,6 +18,7 @@ export function createTodoLists(todoStore) {
     const li = document.importNode(liTemplate, true);
     const a = li.querySelector('a');
     const p = a.querySelector('a p');
+    const deleteListBtn = li.querySelector('.del-list-btn');
 
     li.setAttribute('id', id);
     a.setAttribute('id', id);
@@ -25,6 +26,11 @@ export function createTodoLists(todoStore) {
     // trigger event when todo list clicked
     a.addEventListener('click', (event) => {
       update(event, 'linkClicked', store);
+    });
+
+    // trigger event when delete btn clicked
+    deleteListBtn.addEventListener('click', (event) => {
+      update(event, 'deleteListBtnClicked', store);
     });
 
     p.textContent = listName;
@@ -55,15 +61,15 @@ export function createTodos({ todos, id }) {
     const li = document.importNode(liTemplate, true);
     const p = li.querySelector('p');
 
-    const deleteTodoBtns = li.querySelector('.todo-btns .delete-btn');
-    const tickTodoBtns = li.querySelector('.todo-btns .tick-btn');
+    const deleteTodoBtn = li.querySelector('.todo-btns .delete-btn');
+    const tickTodoBtn = li.querySelector('.todo-btns .tick-btn');
 
     // trigger event when delete btn clicked
-    deleteTodoBtns.addEventListener('click', (event) => {
+    deleteTodoBtn.addEventListener('click', (event) => {
       update(event, 'deleteTodoBtnClicked', store);
     });
     // triggeer event when tick btn clicked
-    tickTodoBtns.addEventListener('click', (event) => {
+    tickTodoBtn.addEventListener('click', (event) => {
       update(event, 'tickTodoBtnClicked', store);
     });
 

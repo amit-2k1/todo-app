@@ -106,6 +106,25 @@ export async function update(
 
           break;
         }
+        case 'deleteListBtnClicked': {
+          const path = event.path || event.composedPath();
+          const liIndex = path.findIndex(({ tagName }) => tagName === 'LI'); // get the li element Index
+          const li = path[liIndex];
+          const ul = li.parentElement;
+          const listId = li.id;
+
+          console.log(listId);
+
+          newTodosLists = newTodosLists.filter(({ id }) => id !== listId);
+
+          await performFetch('PUT', '/deletetodolist', { listId: listId });
+
+          ul.removeChild(li);
+
+          newState = 'showingTodoLists';
+
+          break;
+        }
       }
       break;
     }

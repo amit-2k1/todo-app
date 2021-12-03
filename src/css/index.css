@@ -69,9 +69,23 @@
   border-image: linear-gradient(to left, #fff 1%, #7dedff 50%) 100% 0 100% 0/3px
     0 3px 0;
   border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.del-list-btn {
+  padding: 0.25rem;
+}
+
+.del-list-btn:hover {
+  border-radius: 5px;
+  fill: white;
+  background-color: red;
 }
 
 .lists .item a {
+  flex: 1 0 90%;
   padding: 1rem;
   display: block;
   display: flex;

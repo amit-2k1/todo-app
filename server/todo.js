@@ -35,6 +35,26 @@ export const addTodoList = async (req, res) => {
   );
 };
 
+export const deleteTodoList = async (req, res) => {
+  const { listId } = req.body.store;
+
+  pool.query(
+    'DELETE FROM todo_list WHERE todo_list_id=$1;',
+    [listId],
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+
+      pool.query('DELETE FROM todo WHERE todo_list_id=$1;', [listId]);
+
+      res.json({
+        message: 'Todo List Deleted!'
+      });
+    }
+  );
+};
+
 export const addTodo = async (req, res) => {
   const { todoId, content, completed, listId } = req.body.store;
 
