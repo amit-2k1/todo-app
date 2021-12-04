@@ -20,7 +20,6 @@ let connectionString = {
   port: db_port
 };
 
-use;
 if (env === 'development') {
   connectionString.database = database;
 } else {
