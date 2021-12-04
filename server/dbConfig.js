@@ -12,25 +12,20 @@ const username = process.env.DB_USERNAME;
 const password = process.env.PASSWORD;
 const db_name = process.env.DB_NAME;
 
-let connectionString = {
-  user: username,
-  host: hostname,
-  database: db_name,
-  password: password,
-  port: db_port
-};
+let connectionString;
+let ssl;
 
 if (env === 'development') {
-  connectionString.database = database;
+  connectionString = `postgres://${username}:${password}@${hostname}:${db_port}/${db_name}`;
+  ssl = false;
 } else {
-  connectionString = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-  };
+  connectionString = process.env.DATABASE_URL;
+  ssl: true;
 }
 
 const pool = new Pool({
-  connectionString
+  connectionString,
+  ssl
 });
 
 export default pool;

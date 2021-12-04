@@ -47,7 +47,7 @@ const getTodosLists = async (userId) => {
       'SELECT * FROM todo RIGHT JOIN todo_list ON todo_list.todo_list_id = todo.todo_list_id WHERE todo_list.user_id=$1;',
       [userId]
     );
-  } catch {
+  } catch (err) {
     throw err;
   }
 
