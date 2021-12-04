@@ -8,7 +8,7 @@
     "dev": "npm run build && npm run server",
     "build": "webpack --env production",
     "build-dev": "webpack",
-    "server": "SET DEBUG=app && nodemon -r esm app.js",
+    "server": "nodemon -r esm app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
