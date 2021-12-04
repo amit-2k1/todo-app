@@ -16,7 +16,7 @@ import {
 
 const app = express();
 
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.set('port', PORT);
 
@@ -64,7 +64,7 @@ app.post('/signin', signin);
 
 app.post('/signup', signup);
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log(
     `Server is running.. on ${chalk.blue(`http://localhost:${PORT}`)}`
   );
