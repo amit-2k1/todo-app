@@ -7,6 +7,9 @@ const token = JSON.parse(localStorage.getItem('token'));
 
 if (token) window.location.href = '/';
 
+const isRefreshed =
+  performance.navigation.type == performance.navigation.TYPE_RELOAD;
+
 const params = new URLSearchParams(window.location.search);
 const errMsg = params.get('err');
 const successMsg = params.get('success');
@@ -26,8 +29,10 @@ function showPopup(msg, type) {
   }
 }
 
-errMsg && showPopup(errMsg, 'error'); // if error present then popup displays
-successMsg && showPopup(successMsg, 'success'); // if account created then popup displays
+// show popup when error msg present and not refreshed
+!isRefreshed && errMsg && showPopup(errMsg, 'error');
+// show popup when success msg present and not refreshed
+!isRefreshed && successMsg && showPopup(successMsg, 'success');
 
 const loginFormEl = document.querySelector('#login-form');
 const emailEl = loginFormEl.querySelector('#email');

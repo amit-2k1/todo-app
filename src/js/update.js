@@ -35,8 +35,6 @@ const performFetch = async (method, requestType, store, tokenRequired) => {
   // remove loader container
   loaderContainer.classList.remove('activeContainer');
 
-  console.log(message);
-
   // display popup
   if (message) {
     setTimeout(() => {
@@ -112,8 +110,6 @@ export async function update(
           const li = path[liIndex];
           const ul = li.parentElement;
           const listId = li.id;
-
-          console.log(listId);
 
           newTodosLists = newTodosLists.filter(({ id }) => id !== listId);
 
