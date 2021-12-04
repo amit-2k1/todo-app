@@ -1,0 +1,228 @@
+/*!*********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/style.css ***!
+  \*********************************************************************/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #2b2b2b;
+}
+
+button {
+  padding: 0.25rem;
+  border: none;
+  outline: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.container {
+  padding: 1.5rem 2rem;
+}
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li {
+  list-style-type: none;
+  font-size: 1.25rem;
+  font-weight: normal;
+  margin: 0.5rem 0.25rem;
+}
+
+.svg-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  background-color: #7dedff;
+  padding: 2rem;
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 a {
+  color: #fff;
+  font-size: 3rem;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+.pop-up {
+  border-radius: 10px;
+  position: absolute;
+  top: -100%;
+  right: 5vw;
+  width: 200px;
+  color: white;
+  padding: 0.5rem;
+  transition: top 1s ease-in-out;
+  text-align: center;
+  z-index: 6;
+}
+
+.err-msg {
+  background-color: #ff2e2e;
+}
+
+.success-msg {
+  background-color: #00db92;
+}
+
+.activePopup {
+  top: 10vh;
+}
+
+#loader-container {
+  display: none;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  opacity: 0.6;
+  z-index: 5;
+  pointer-events: none;
+}
+
+#loader {
+  position: absolute;
+  border: 8px solid #00ddff;
+  border-left: 8px solid #f3f3f3;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#loader.activeLoader {
+  animation: spin 2s linear infinite;
+  opacity: 1;
+}
+
+#loader-container.activeContainer {
+  display: block;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(45vw, 45vh) rotate(0deg);
+  }
+  100% {
+    transform: translate(45vw, 45vh) rotate(360deg);
+  }
+}
+
+/*!********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/auth.css ***!
+  \********************************************************************/
+header h5 {
+  padding: 0.5rem;
+}
+
+header h5 a {
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  padding: inherit;
+  border: white 2px solid;
+  color: white;
+  border-radius: 5px;
+}
+
+header h5 a:hover {
+  background-color: white;
+  color: #7dedff;
+}
+
+.container {
+  margin: 10vh auto;
+  width: 30vw;
+  height: 100%;
+  min-width: 350px;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 1px #cfcece;
+}
+
+.container h2 {
+  font-size: 2rem;
+  padding: 0.5rem;
+  text-align: center;
+  color: white;
+  background-color: #7dedff;
+}
+
+form {
+  height: 100%;
+}
+
+.field {
+  display: flex;
+  flex-flow: column;
+  padding: 0.25rem;
+  margin: 0.5rem;
+}
+
+.field > * {
+  margin-bottom: 0.25rem;
+  padding: 0.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.field input {
+  border: 2px #7dedff solid;
+  border-radius: 2px;
+}
+
+.sub-btn {
+  padding: 0.25rem;
+  margin: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sub-btn button {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  color: white;
+  font-weight: 400;
+  background-color: #7dedff;
+  border-radius: 2px;
+}
+
+.sub-btn button:hover {
+  background-color: #a2f3ff;
+}
+
+input.error {
+  border: 2px #ff2e2e solid;
+}
+
+input.success {
+  border: 2px #00db92 solid;
+}
+
+.info {
+  font-size: 0.75rem;
+  color: #ff2e2e;
+}
+
+
+/*# sourceMappingURL=signup.css.map*/

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>todo | Sign In</title>
+  <script defer src="../js/login.js"></script><link href="../css/login.css" rel="stylesheet"></head>
+  <body>
+    <p class="pop-up"></p>
+    <header>
+      <h1><a href="/">todo</a></h1>
+      <h5 class="link"><a href="/signup">Sign Up</a></h5>
+    </header>
+
+    <section class="container">
+      <h2>Log In</h2>
+      <form id="login-form" class="form" method="POST">
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            autocomplete="off"
+            placeholder="Enter your email"
+            required
+          />
+
+          <small class="info"></small>
+        </div>
+        <div class="field">
+          <label for="pass">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            autocomplete="off"
+            placeholder="Enter your password"
+            required
+          />
+
+          <small class="info"></small>
+        </div>
+
+        <div class="sub-btn">
+          <button id="login-sub-btn" type="submit">Log In</button>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

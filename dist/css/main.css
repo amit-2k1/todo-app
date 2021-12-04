@@ -1,0 +1,354 @@
+/*!*********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/style.css ***!
+  \*********************************************************************/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #2b2b2b;
+}
+
+button {
+  padding: 0.25rem;
+  border: none;
+  outline: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.container {
+  padding: 1.5rem 2rem;
+}
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li {
+  list-style-type: none;
+  font-size: 1.25rem;
+  font-weight: normal;
+  margin: 0.5rem 0.25rem;
+}
+
+.svg-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  background-color: #7dedff;
+  padding: 2rem;
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 a {
+  color: #fff;
+  font-size: 3rem;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+.pop-up {
+  border-radius: 10px;
+  position: absolute;
+  top: -100%;
+  right: 5vw;
+  width: 200px;
+  color: white;
+  padding: 0.5rem;
+  transition: top 1s ease-in-out;
+  text-align: center;
+  z-index: 6;
+}
+
+.err-msg {
+  background-color: #ff2e2e;
+}
+
+.success-msg {
+  background-color: #00db92;
+}
+
+.activePopup {
+  top: 10vh;
+}
+
+#loader-container {
+  display: none;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  opacity: 0.6;
+  z-index: 5;
+  pointer-events: none;
+}
+
+#loader {
+  position: absolute;
+  border: 8px solid #00ddff;
+  border-left: 8px solid #f3f3f3;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#loader.activeLoader {
+  animation: spin 2s linear infinite;
+  opacity: 1;
+}
+
+#loader-container.activeContainer {
+  display: block;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(45vw, 45vh) rotate(0deg);
+  }
+  100% {
+    transform: translate(45vw, 45vh) rotate(360deg);
+  }
+}
+
+/*!*********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/index.css ***!
+  \*********************************************************************/
+#profile {
+  font-size: 1.5rem;
+  background-color: #7dedff;
+}
+
+.dropdown {
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 1rem;
+  color: white;
+  padding: 0.25rem 0.5rem;
+}
+
+.dropdown:hover .dropbtn {
+  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+    0 0 82px #aae8f1, 0 0 92px #aae8f1, 0 0 102px #aae8f1, 0 0 151px #0fa;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: inherit;
+}
+
+.dropdown-item {
+  float: none;
+  padding: 0.25rem 0.5rem;
+  text-decoration: none;
+  display: block;
+  background-color: white;
+  text-align: left;
+}
+
+.sign-out-btn {
+  color: red;
+}
+
+.sign-out-btn:hover {
+  color: white;
+  background-color: red;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.title {
+  margin-bottom: 1rem;
+  color: #7dedff;
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: normal;
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  top: 10vh;
+  left: -100%;
+  transition: left 500ms ease-in;
+}
+
+.lists .item {
+  border: solid;
+  border-image: linear-gradient(to left, #fff 1%, #7dedff 50%) 100% 0 100% 0/3px
+    0 3px 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.del-list-btn {
+  padding: 0.25rem;
+}
+
+.del-list-btn:hover {
+  border-radius: 5px;
+  fill: white;
+  background-color: red;
+}
+
+.lists .item a {
+  flex: 1 0 90%;
+  padding: 1rem;
+  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todos ul {
+  display: none;
+}
+
+.todo {
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.todo p {
+  flex-basis: 85%;
+}
+
+.todo-btns {
+  display: flex;
+  justify-content: center;
+}
+
+.todo-btns > * {
+  transition: fill 200ms ease-in-out;
+}
+
+.todo p.completed {
+  text-decoration: line-through;
+  color: #bebebe;
+  font-style: italic;
+}
+
+.todo p.completed + .todo-btns .tick-btn {
+  fill: #0fa;
+}
+
+.activeContainer {
+  left: 0;
+  transition: left 500ms ease-out;
+}
+
+.todos ul.activeTodos {
+  display: block;
+}
+
+/*!********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/form.css ***!
+  \********************************************************************/
+.overlay-form {
+  position: absolute;
+  top: -50vh;
+  left: 0px;
+  width: 100vw;
+  height: 0vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: -1;
+  opacity: 0;
+  padding: 80px 100px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: top 500ms ease-in-out, opacity 500ms ease-in-out,
+    height 0ms ease-in-out 500ms;
+}
+.overlay-form .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.overlay-form h3 {
+  font-size: 32px;
+  color: #fff;
+}
+
+.overlay-form .form-element {
+  margin: 20px 0px;
+}
+.overlay-form label {
+  display: block;
+  font-size: 17px;
+  color: #eee;
+  margin-bottom: 5px;
+}
+.overlay-form input {
+  width: 100%;
+  padding: 6px;
+  color: #7dedff;
+  font-size: 17px;
+  border: 2px solid #eee;
+  background: transparent;
+  outline: none;
+  border-radius: 10px;
+}
+
+.overlay-form button {
+  margin-top: 10px;
+  width: 100px;
+  height: 3rem;
+  font-size: 15px;
+  text-transform: uppercase;
+  background: #fff;
+  color: #222;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#user-form.activeForm {
+  height: 100vh;
+}
+
+.overlay-form.activeForm {
+  z-index: 2;
+  opacity: 1;
+  top: 0px;
+  height: 90vh;
+  transition: top 500ms ease-in-out, opacity 500ms ease-in-out,
+    height 0ms ease-in-out 0ms;
+}
+
+
+/*# sourceMappingURL=main.css.map*/
