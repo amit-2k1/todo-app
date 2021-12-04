@@ -20,7 +20,7 @@ if (env === 'development') {
   ssl = false;
 } else {
   connectionString = process.env.DATABASE_URL;
-  ssl: true;
+  ssl = true;
 }
 
 const pool = new Pool({
