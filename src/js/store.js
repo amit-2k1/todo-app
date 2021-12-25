@@ -1,4 +1,6 @@
-import { createTodoLists, createTodos, renderUsername } from './init';
+import { createTodos } from './todo';
+import { createTodoLists } from './todolist';
+import { displayUsername } from './user';
 
 const store = {
   state: 'showingTodoLists',
@@ -24,12 +26,11 @@ const store = {
     // Loading all todo lists
     createTodoLists(store.todosLists);
     // Loading all todos in DOM
-    store.todosLists.forEach((todos) => {
-      createTodos(todos);
-
-      //display username
-      renderUsername(name);
+    store.todosLists.forEach((todoList) => {
+      createTodos(todoList);
     });
+
+    displayUsername(name);
   },
   setTodosLists: function (todosLists) {
     if (!todosLists) return;

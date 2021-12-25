@@ -1,4 +1,5 @@
-import { createTodoLists, createTodos } from './init';
+import { createTodos } from './todo';
+import { createTodoLists } from './todolist';
 import uniqid from 'uniqid';
 import store from './store';
 
@@ -47,11 +48,7 @@ const performFetch = async (method, requestType, store, tokenRequired) => {
   }
 };
 
-export async function update(
-  event,
-  eventType,
-  { state, activeTodos, todosLists }
-) {
+export async function update(event, eventType) {
   const todoListsContainer = document.querySelector('#todo-lists-container');
   const todosContainer = document.querySelector('#todos-container');
   const addTodoListForm = todoListsContainer.querySelector(
@@ -59,9 +56,9 @@ export async function update(
   );
   const addTodoForm = todosContainer.querySelector('#add-todo-form');
 
-  let newState = state;
-  let newActiveTodos = activeTodos;
-  let newTodosLists = todosLists;
+  let newState = store.state;
+  let newActiveTodos = store.activeTodos;
+  let newTodosLists = store.todosLists;
 
   switch (newState) {
     case 'showingTodoLists': {
@@ -345,10 +342,4 @@ export async function update(
     activeTodos: newActiveTodos,
     todosLists: newTodosLists
   });
-}
-
-export async function signout() {
-  localStorage.removeItem('token');
-
-  window.location.href = '/signin';
 }

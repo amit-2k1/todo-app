@@ -12,108 +12,6 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
-/***/ "./src/js/init.js":
-/*!************************!*\
-  !*** ./src/js/init.js ***!
-  \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "renderUsername": () => (/* binding */ renderUsername),
-/* harmony export */   "createTodoLists": () => (/* binding */ createTodoLists),
-/* harmony export */   "createTodos": () => (/* binding */ createTodos)
-/* harmony export */ });
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./src/js/store.js");
-/* harmony import */ var _update__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./update */ "./src/js/update.js");
-/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uniqid */ "./node_modules/uniqid/index.js");
-/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(uniqid__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-function renderUsername(name) {
-  var nameEl = document.querySelector('#profile-name');
-  nameEl.textContent = _store__WEBPACK_IMPORTED_MODULE_0__["default"].user.name;
-}
-function createTodoLists(todoStore) {
-  var todoListContainer = document.querySelector('ul#todo-list');
-  var todoListTemplate = document.querySelector('template#todo-list-template');
-  var liTemplate = todoListTemplate.content.querySelector('.item');
-  todoStore.forEach(function (_ref) {
-    var id = _ref.id,
-        listName = _ref.listName;
-    var li = document.importNode(liTemplate, true);
-    var a = li.querySelector('a');
-    var p = a.querySelector('a p');
-    var deleteListBtn = li.querySelector('.del-list-btn');
-    li.setAttribute('id', id);
-    a.setAttribute('id', id); // trigger event when todo list clicked
-
-    a.addEventListener('click', function (event) {
-      (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'linkClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
-    }); // trigger event when delete btn clicked
-
-    deleteListBtn.addEventListener('click', function (event) {
-      (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'deleteListBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
-    });
-    p.textContent = listName;
-    todoListContainer.appendChild(li);
-  });
-}
-function createTodos(_ref2) {
-  var todos = _ref2.todos,
-      id = _ref2.id;
-  var todosTemplate = document.querySelector('template#todos-template');
-  var todosContainer = document.querySelector('div.todos');
-  var ul = document.createElement('ul');
-  var oldUl = todosContainer.querySelector("#".concat(id));
-
-  if (oldUl) {
-    var lis = oldUl.querySelectorAll('.todo');
-    lis.forEach(function (li) {
-      return oldUl.removeChild(li);
-    });
-    ul = oldUl;
-  } else {
-    ul.setAttribute('id', id);
-    todosContainer.appendChild(ul);
-  }
-
-  var liTemplate = todosTemplate.content.querySelector('li');
-  todos.forEach(function (_ref3) {
-    var id = _ref3.id,
-        content = _ref3.content,
-        completed = _ref3.completed;
-    var li = document.importNode(liTemplate, true);
-    var p = li.querySelector('p');
-    var deleteTodoBtn = li.querySelector('.todo-btns .delete-btn');
-    var tickTodoBtn = li.querySelector('.todo-btns .tick-btn'); // trigger event when delete btn clicked
-
-    deleteTodoBtn.addEventListener('click', function (event) {
-      (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'deleteTodoBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
-    }); // triggeer event when tick btn clicked
-
-    tickTodoBtn.addEventListener('click', function (event) {
-      (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'tickTodoBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
-    });
-    var todoId;
-    if (!id) todoId = uniqid__WEBPACK_IMPORTED_MODULE_2___default()();else todoId = id;
-    li.setAttribute('id', todoId);
-    p.setAttribute('class', completed ? 'completed' : '');
-    p.textContent = content;
-    ul.appendChild(li);
-  });
-
-  if (oldUl) {
-    ul.setAttribute('class', 'activeTodos');
-  } else {
-    todosContainer.appendChild(ul);
-  }
-}
-
-/***/ }),
-
 /***/ "./src/js/store.js":
 /*!*************************!*\
   !*** ./src/js/store.js ***!
@@ -128,7 +26,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./init */ "./src/js/init.js");
+/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./todo */ "./src/js/todo.js");
+/* harmony import */ var _todolist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./todolist */ "./src/js/todolist.js");
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./user */ "./src/js/user.js");
+
+
 
 
 
@@ -166,15 +68,14 @@ var store = {
               this.setUser(name);
               this.setTodosLists(todosLists); // Loading all todo lists
 
-              (0,_init__WEBPACK_IMPORTED_MODULE_2__.createTodoLists)(store.todosLists); // Loading all todos in DOM
+              (0,_todolist__WEBPACK_IMPORTED_MODULE_3__.createTodoLists)(store.todosLists); // Loading all todos in DOM
 
-              store.todosLists.forEach(function (todos) {
-                (0,_init__WEBPACK_IMPORTED_MODULE_2__.createTodos)(todos); //display username
-
-                (0,_init__WEBPACK_IMPORTED_MODULE_2__.renderUsername)(name);
+              store.todosLists.forEach(function (todoList) {
+                (0,_todo__WEBPACK_IMPORTED_MODULE_2__.createTodos)(todoList);
               });
+              (0,_user__WEBPACK_IMPORTED_MODULE_4__.displayUsername)(name);
 
-            case 14:
+            case 15:
             case "end":
               return _context.stop();
           }
@@ -209,6 +110,118 @@ var store = {
 
 /***/ }),
 
+/***/ "./src/js/todo.js":
+/*!************************!*\
+  !*** ./src/js/todo.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createTodos": () => (/* binding */ createTodos)
+/* harmony export */ });
+/* harmony import */ var _update__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./update */ "./src/js/update.js");
+/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! uniqid */ "./node_modules/uniqid/index.js");
+/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(uniqid__WEBPACK_IMPORTED_MODULE_1__);
+
+ // create or add todo to DOM
+
+function createTodos(_ref) {
+  var todos = _ref.todos,
+      id = _ref.id;
+  var todosTemplate = document.querySelector('template#todos-template');
+  var todosContainer = document.querySelector('div.todos');
+  var ul = document.createElement('ul');
+  var oldUl = todosContainer.querySelector("#".concat(id));
+
+  if (oldUl) {
+    var lis = oldUl.querySelectorAll('.todo');
+    lis.forEach(function (li) {
+      return oldUl.removeChild(li);
+    });
+    ul = oldUl;
+  } else {
+    ul.setAttribute('id', id);
+    todosContainer.appendChild(ul);
+  }
+
+  var liTemplate = todosTemplate.content.querySelector('li');
+  todos.forEach(function (_ref2) {
+    var id = _ref2.id,
+        content = _ref2.content,
+        completed = _ref2.completed;
+    var li = document.importNode(liTemplate, true);
+    var p = li.querySelector('p');
+    var deleteTodoBtn = li.querySelector('.todo-btns .delete-btn');
+    var tickTodoBtn = li.querySelector('.todo-btns .tick-btn'); // trigger event when delete btn clicked
+
+    deleteTodoBtn.addEventListener('click', function (event) {
+      (0,_update__WEBPACK_IMPORTED_MODULE_0__.update)(event, 'deleteTodoBtnClicked');
+    }); // trigger event when tick btn clicked
+
+    tickTodoBtn.addEventListener('click', function (event) {
+      (0,_update__WEBPACK_IMPORTED_MODULE_0__.update)(event, 'tickTodoBtnClicked');
+    });
+    var todoId;
+    if (!id) todoId = uniqid__WEBPACK_IMPORTED_MODULE_1___default()();else todoId = id;
+    li.setAttribute('id', todoId);
+    p.setAttribute('class', completed ? 'completed' : '');
+    p.textContent = content;
+    ul.appendChild(li);
+  });
+
+  if (oldUl) {
+    ul.setAttribute('class', 'activeTodos');
+  } else {
+    todosContainer.appendChild(ul);
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/todolist.js":
+/*!****************************!*\
+  !*** ./src/js/todolist.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createTodoLists": () => (/* binding */ createTodoLists)
+/* harmony export */ });
+/* harmony import */ var _update__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./update */ "./src/js/update.js");
+ // create or add todolist to DOM
+
+function createTodoLists(todoStore) {
+  var todoListContainer = document.querySelector('ul#todo-list');
+  var todoListTemplate = document.querySelector('template#todo-list-template');
+  var liTemplate = todoListTemplate.content.querySelector('.item');
+  todoStore.forEach(function (_ref) {
+    var id = _ref.id,
+        listName = _ref.listName;
+    var li = document.importNode(liTemplate, true);
+    var a = li.querySelector('a');
+    var p = a.querySelector('a p');
+    var deleteListBtn = li.querySelector('.del-list-btn');
+    li.setAttribute('id', id);
+    a.setAttribute('id', id); // trigger event when todo list clicked
+
+    a.addEventListener('click', function (event) {
+      (0,_update__WEBPACK_IMPORTED_MODULE_0__.update)(event, 'linkClicked');
+    }); // trigger event when delete btn clicked
+
+    deleteListBtn.addEventListener('click', function (event) {
+      (0,_update__WEBPACK_IMPORTED_MODULE_0__.update)(event, 'deleteListBtnClicked');
+    });
+    p.textContent = listName;
+    todoListContainer.appendChild(li);
+  });
+}
+
+/***/ }),
+
 /***/ "./src/js/update.js":
 /*!**************************!*\
   !*** ./src/js/update.js ***!
@@ -218,16 +231,17 @@ var store = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "update": () => (/* binding */ update),
-/* harmony export */   "signout": () => (/* binding */ signout)
+/* harmony export */   "update": () => (/* binding */ update)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./init */ "./src/js/init.js");
-/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uniqid */ "./node_modules/uniqid/index.js");
-/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uniqid__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./src/js/store.js");
+/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./todo */ "./src/js/todo.js");
+/* harmony import */ var _todolist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./todolist */ "./src/js/todolist.js");
+/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uniqid */ "./node_modules/uniqid/index.js");
+/* harmony import */ var uniqid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uniqid__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./src/js/store.js");
+
 
 
 
@@ -303,53 +317,52 @@ var performFetch = /*#__PURE__*/function () {
   };
 }();
 
-function update(_x5, _x6, _x7) {
+function update(_x5, _x6) {
   return _update.apply(this, arguments);
 }
 
 function _update() {
-  _update = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(event, eventType, _ref2) {
-    var state, activeTodos, todosLists, todoListsContainer, todosContainer, addTodoListForm, addTodoForm, newState, newActiveTodos, newTodosLists, id, todosListEle, todosEle, path, liIndex, li, ul, listId, curActiveContainer, _path, _liIndex, _li, _ul, todoId, listIndex, _path2, _liIndex2, _li2, p, _todoId, _listIndex, todoIndex, completed, listNameField, listName, newTodosList, todoField, todo, newTodo, _id;
+  _update = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(event, eventType) {
+    var todoListsContainer, todosContainer, addTodoListForm, addTodoForm, newState, newActiveTodos, newTodosLists, id, todosListEle, todosEle, path, liIndex, li, ul, listId, curActiveContainer, _path, _liIndex, _li, _ul, todoId, listIndex, _path2, _liIndex2, _li2, p, _todoId, _listIndex, todoIndex, completed, listNameField, listName, newTodosList, todoField, todo, newTodo, _id;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            state = _ref2.state, activeTodos = _ref2.activeTodos, todosLists = _ref2.todosLists;
             todoListsContainer = document.querySelector('#todo-lists-container');
             todosContainer = document.querySelector('#todos-container');
             addTodoListForm = todoListsContainer.querySelector('#add-todo-list-form');
             addTodoForm = todosContainer.querySelector('#add-todo-form');
-            newState = state;
-            newActiveTodos = activeTodos;
-            newTodosLists = todosLists;
+            newState = _store__WEBPACK_IMPORTED_MODULE_5__["default"].state;
+            newActiveTodos = _store__WEBPACK_IMPORTED_MODULE_5__["default"].activeTodos;
+            newTodosLists = _store__WEBPACK_IMPORTED_MODULE_5__["default"].todosLists;
             _context2.t0 = newState;
-            _context2.next = _context2.t0 === 'showingTodoLists' ? 11 : _context2.t0 === 'showingTodos' ? 39 : _context2.t0 === 'showingAddListForm' ? 82 : _context2.t0 === 'showingAddTodoForm' ? 104 : 126;
+            _context2.next = _context2.t0 === 'showingTodoLists' ? 10 : _context2.t0 === 'showingTodos' ? 38 : _context2.t0 === 'showingAddListForm' ? 81 : _context2.t0 === 'showingAddTodoForm' ? 103 : 125;
             break;
 
-          case 11:
+          case 10:
             _context2.t1 = eventType;
-            _context2.next = _context2.t1 === 'linkClicked' ? 14 : _context2.t1 === 'addListBtnClicked' ? 24 : _context2.t1 === 'deleteListBtnClicked' ? 27 : 38;
+            _context2.next = _context2.t1 === 'linkClicked' ? 13 : _context2.t1 === 'addListBtnClicked' ? 23 : _context2.t1 === 'deleteListBtnClicked' ? 26 : 37;
             break;
 
-          case 14:
+          case 13:
             id = event.currentTarget.id;
             todosListEle = todoListsContainer.querySelector("#".concat(id));
             todosEle = todosContainer.querySelector("#".concat(id));
 
             if (todosListEle) {
-              _context2.next = 20;
+              _context2.next = 19;
               break;
             }
 
-            _store__WEBPACK_IMPORTED_MODULE_4__["default"].setStore({
+            _store__WEBPACK_IMPORTED_MODULE_5__["default"].setStore({
               state: 'showingTodoLists',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             });
             return _context2.abrupt("return");
 
-          case 20:
+          case 19:
             if (todoListsContainer.classList.contains('activeContainer')) {
               todoListsContainer.classList.remove('activeContainer');
             }
@@ -361,62 +374,62 @@ function _update() {
             }
 
             newState = 'showingTodos';
-            return _context2.abrupt("break", 38);
+            return _context2.abrupt("break", 37);
 
-          case 24:
+          case 23:
             if (!addTodoListForm.classList.contains('activeForm')) {
               addTodoListForm.classList.add('activeForm');
             }
 
             newState = 'showingAddListForm';
-            return _context2.abrupt("break", 38);
+            return _context2.abrupt("break", 37);
 
-          case 27:
+          case 26:
             path = event.path || event.composedPath();
-            liIndex = path.findIndex(function (_ref3) {
-              var tagName = _ref3.tagName;
+            liIndex = path.findIndex(function (_ref2) {
+              var tagName = _ref2.tagName;
               return tagName === 'LI';
             }); // get the li element Index
 
             li = path[liIndex];
             ul = li.parentElement;
             listId = li.id;
-            newTodosLists = newTodosLists.filter(function (_ref4) {
-              var id = _ref4.id;
+            newTodosLists = newTodosLists.filter(function (_ref3) {
+              var id = _ref3.id;
               return id !== listId;
             });
-            _context2.next = 35;
+            _context2.next = 34;
             return performFetch('PUT', '/deletetodolist', {
               listId: listId
             });
 
-          case 35:
+          case 34:
             ul.removeChild(li);
             newState = 'showingTodoLists';
-            return _context2.abrupt("break", 38);
+            return _context2.abrupt("break", 37);
+
+          case 37:
+            return _context2.abrupt("break", 125);
 
           case 38:
-            return _context2.abrupt("break", 126);
-
-          case 39:
             _context2.t2 = eventType;
-            _context2.next = _context2.t2 === 'backBtnClicked' ? 42 : _context2.t2 === 'addTodoBtnClicked' ? 52 : _context2.t2 === 'deleteTodoBtnClicked' ? 55 : _context2.t2 === 'tickTodoBtnClicked' ? 67 : 81;
+            _context2.next = _context2.t2 === 'backBtnClicked' ? 41 : _context2.t2 === 'addTodoBtnClicked' ? 51 : _context2.t2 === 'deleteTodoBtnClicked' ? 54 : _context2.t2 === 'tickTodoBtnClicked' ? 66 : 80;
             break;
 
-          case 42:
+          case 41:
             if (!(!todosContainer.classList.contains('activeContainer') && !newActiveTodos)) {
-              _context2.next = 45;
+              _context2.next = 44;
               break;
             }
 
-            _store__WEBPACK_IMPORTED_MODULE_4__["default"].setStore({
+            _store__WEBPACK_IMPORTED_MODULE_5__["default"].setStore({
               state: 'showingTodos',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             });
             return _context2.abrupt("return");
 
-          case 45:
+          case 44:
             curActiveContainer = todosContainer.querySelector("#".concat(newActiveTodos));
             todosContainer.classList.remove('activeContainer');
             curActiveContainer.classList.remove('activeTodos');
@@ -427,176 +440,176 @@ function _update() {
             }
 
             newState = 'showingTodoLists';
-            return _context2.abrupt("break", 81);
+            return _context2.abrupt("break", 80);
 
-          case 52:
+          case 51:
             if (!addTodoForm.classList.contains('activeForm')) {
               addTodoForm.classList.add('activeForm');
             }
 
             newState = 'showingAddTodoForm';
-            return _context2.abrupt("break", 81);
+            return _context2.abrupt("break", 80);
 
-          case 55:
+          case 54:
             _path = event.path || event.composedPath();
-            _liIndex = _path.findIndex(function (_ref5) {
-              var tagName = _ref5.tagName;
+            _liIndex = _path.findIndex(function (_ref4) {
+              var tagName = _ref4.tagName;
               return tagName === 'LI';
             }); // get the li element Index
 
             _li = _path[_liIndex];
             _ul = _li.parentElement;
             todoId = _li.id;
-            listIndex = newTodosLists.findIndex(function (_ref6) {
-              var id = _ref6.id;
+            listIndex = newTodosLists.findIndex(function (_ref5) {
+              var id = _ref5.id;
               return id === newActiveTodos;
             });
-            newTodosLists[listIndex].todos = newTodosLists[listIndex].todos.filter(function (_ref7) {
-              var id = _ref7.id;
+            newTodosLists[listIndex].todos = newTodosLists[listIndex].todos.filter(function (_ref6) {
+              var id = _ref6.id;
               return id != todoId;
             });
-            _context2.next = 64;
+            _context2.next = 63;
             return performFetch('PUT', '/deletetodo', {
               todoId: todoId
             });
 
-          case 64:
+          case 63:
             _ul.removeChild(_li);
 
             newState = 'showingTodos';
-            return _context2.abrupt("break", 81);
+            return _context2.abrupt("break", 80);
 
-          case 67:
+          case 66:
             _path2 = event.path || event.composedPath();
-            _liIndex2 = _path2.findIndex(function (_ref8) {
-              var tagName = _ref8.tagName;
+            _liIndex2 = _path2.findIndex(function (_ref7) {
+              var tagName = _ref7.tagName;
               return tagName === 'LI';
             }); // get the li element Index
 
             _li2 = _path2[_liIndex2];
             p = _li2.querySelector('p');
             _todoId = _li2.id;
-            _listIndex = newTodosLists.findIndex(function (_ref9) {
-              var id = _ref9.id;
+            _listIndex = newTodosLists.findIndex(function (_ref8) {
+              var id = _ref8.id;
               return id === newActiveTodos;
             });
-            todoIndex = newTodosLists[_listIndex].todos.findIndex(function (_ref10) {
-              var id = _ref10.id;
+            todoIndex = newTodosLists[_listIndex].todos.findIndex(function (_ref9) {
+              var id = _ref9.id;
               return id === _todoId;
             });
             completed = !newTodosLists[_listIndex].todos[todoIndex].completed;
-            _context2.next = 77;
+            _context2.next = 76;
             return performFetch('PUT', '/marktodo', {
               todoId: _todoId,
               completed: completed
             });
 
-          case 77:
+          case 76:
             newTodosLists[_listIndex].todos[todoIndex].completed = completed;
             p.classList.toggle('completed');
             newState = 'showingTodos';
-            return _context2.abrupt("break", 81);
+            return _context2.abrupt("break", 80);
+
+          case 80:
+            return _context2.abrupt("break", 125);
 
           case 81:
-            return _context2.abrupt("break", 126);
-
-          case 82:
             _context2.t3 = eventType;
-            _context2.next = _context2.t3 === 'closeBtnClicked' ? 85 : _context2.t3 === 'submitBtnClicked' ? 88 : 103;
+            _context2.next = _context2.t3 === 'closeBtnClicked' ? 84 : _context2.t3 === 'submitBtnClicked' ? 87 : 102;
             break;
 
-          case 85:
+          case 84:
             // closing the form
             if (addTodoListForm.classList.contains('activeForm')) {
               addTodoListForm.classList.remove('activeForm');
             }
 
             newState = 'showingTodoLists';
-            return _context2.abrupt("break", 103);
+            return _context2.abrupt("break", 102);
 
-          case 88:
+          case 87:
             listNameField = addTodoListForm.querySelector('#list-name-field');
             listName = listNameField.value;
             listNameField.value = '';
 
             if (listName) {
-              _context2.next = 94;
+              _context2.next = 93;
               break;
             }
 
-            _store__WEBPACK_IMPORTED_MODULE_4__["default"].setStore({
+            _store__WEBPACK_IMPORTED_MODULE_5__["default"].setStore({
               state: 'showingAddListForm',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             });
             return _context2.abrupt("return");
 
-          case 94:
+          case 93:
             newTodosList = {
-              id: uniqid__WEBPACK_IMPORTED_MODULE_3___default()(),
+              id: uniqid__WEBPACK_IMPORTED_MODULE_4___default()(),
               listName: listName,
               todos: []
             };
-            _context2.next = 97;
+            _context2.next = 96;
             return performFetch('PUT', '/addtodolist', {
               listId: newTodosList.id,
               listName: newTodosList.listName
             }, true);
 
-          case 97:
-            (0,_init__WEBPACK_IMPORTED_MODULE_2__.createTodoLists)([newTodosList]);
-            (0,_init__WEBPACK_IMPORTED_MODULE_2__.createTodos)(newTodosList);
+          case 96:
+            (0,_todolist__WEBPACK_IMPORTED_MODULE_3__.createTodoLists)([newTodosList]);
+            (0,_todo__WEBPACK_IMPORTED_MODULE_2__.createTodos)(newTodosList);
             newTodosLists.push(newTodosList); // closing the form after the new todo list added
 
             addTodoListForm.classList.remove('activeForm');
             newState = 'showingTodoLists';
-            return _context2.abrupt("break", 103);
+            return _context2.abrupt("break", 102);
+
+          case 102:
+            return _context2.abrupt("break", 125);
 
           case 103:
-            return _context2.abrupt("break", 126);
-
-          case 104:
             _context2.t4 = eventType;
-            _context2.next = _context2.t4 === 'closeBtnClicked' ? 107 : _context2.t4 === 'submitBtnClicked' ? 110 : 125;
+            _context2.next = _context2.t4 === 'closeBtnClicked' ? 106 : _context2.t4 === 'submitBtnClicked' ? 109 : 124;
             break;
 
-          case 107:
+          case 106:
             // closing the form
             if (addTodoForm.classList.contains('activeForm')) {
               addTodoForm.classList.remove('activeForm');
             }
 
             newState = 'showingTodos';
-            return _context2.abrupt("break", 125);
+            return _context2.abrupt("break", 124);
 
-          case 110:
+          case 109:
             todoField = addTodoForm.querySelector('#todo-field');
             todo = todoField.value;
             todoField.value = '';
 
             if (todo) {
-              _context2.next = 116;
+              _context2.next = 115;
               break;
             }
 
-            _store__WEBPACK_IMPORTED_MODULE_4__["default"].setStore({
+            _store__WEBPACK_IMPORTED_MODULE_5__["default"].setStore({
               state: 'showingAddTodoForm',
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             });
             return _context2.abrupt("return");
 
-          case 116:
+          case 115:
             newTodo = {
-              id: uniqid__WEBPACK_IMPORTED_MODULE_3___default()(),
+              id: uniqid__WEBPACK_IMPORTED_MODULE_4___default()(),
               content: todo,
               completed: false
             };
-            _id = newTodosLists.findIndex(function (_ref11) {
-              var id = _ref11.id;
+            _id = newTodosLists.findIndex(function (_ref10) {
+              var id = _ref10.id;
               return id === newActiveTodos;
             });
-            _context2.next = 120;
+            _context2.next = 119;
             return performFetch('PUT', '/addtodo', {
               todoId: newTodo.id,
               content: newTodo.content,
@@ -604,26 +617,26 @@ function _update() {
               listId: newTodosLists[_id].id
             });
 
-          case 120:
+          case 119:
             newTodosLists[_id].todos.push(newTodo);
 
-            (0,_init__WEBPACK_IMPORTED_MODULE_2__.createTodos)(newTodosLists[_id]); // closing the form after the new todo added
+            (0,_todo__WEBPACK_IMPORTED_MODULE_2__.createTodos)(newTodosLists[_id]); // closing the form after the new todo added
 
             addTodoForm.classList.remove('activeForm');
             newState = 'showingTodos';
+            return _context2.abrupt("break", 124);
+
+          case 124:
             return _context2.abrupt("break", 125);
 
           case 125:
-            return _context2.abrupt("break", 126);
-
-          case 126:
-            _store__WEBPACK_IMPORTED_MODULE_4__["default"].setStore({
+            _store__WEBPACK_IMPORTED_MODULE_5__["default"].setStore({
               state: newState,
               activeTodos: newActiveTodos,
               todosLists: newTodosLists
             });
 
-          case 127:
+          case 126:
           case "end":
             return _context2.stop();
         }
@@ -633,25 +646,50 @@ function _update() {
   return _update.apply(this, arguments);
 }
 
+/***/ }),
+
+/***/ "./src/js/user.js":
+/*!************************!*\
+  !*** ./src/js/user.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "displayUsername": () => (/* binding */ displayUsername),
+/* harmony export */   "signout": () => (/* binding */ signout)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./src/js/store.js");
+
+
+
+function displayUsername(name) {
+  var nameEl = document.querySelector('#profile-name');
+  nameEl.textContent = _store__WEBPACK_IMPORTED_MODULE_2__["default"].user.name;
+}
 function signout() {
   return _signout.apply(this, arguments);
 }
 
 function _signout() {
-  _signout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
+  _signout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context.prev = _context.next) {
           case 0:
             localStorage.removeItem('token');
             window.location.href = '/signin';
 
           case 2:
           case "end":
-            return _context3.stop();
+            return _context.stop();
         }
       }
-    }, _callee3);
+    }, _callee);
   }));
   return _signout.apply(this, arguments);
 }
@@ -1628,11 +1666,13 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./src/js/store.js");
 /* harmony import */ var _update__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./update */ "./src/js/update.js");
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user */ "./src/js/user.js");
 __webpack_require__(/*! ../css/style.css */ "./src/css/style.css");
 
 __webpack_require__(/*! ../css/index.css */ "./src/css/index.css");
 
 __webpack_require__(/*! ../css/form.css */ "./src/css/form.css");
+
 
 
 
@@ -1650,13 +1690,13 @@ var addTodoListSubmitBtn = addTodoListForm.querySelector('.add-list-submit-btn')
 var addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
 var singoutBtn = document.querySelector('.sign-out-btn');
 backBtn.addEventListener('click', function (event) {
-  (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'backBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'backBtnClicked');
 });
 addTodoListBtn.addEventListener('click', function (event) {
-  (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'addListBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'addListBtnClicked');
 });
 closeTodoListFormBtn.addEventListener('click', function (event) {
-  (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'closeBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'closeBtnClicked');
 });
 openAddTodoFormBtn.addEventListener('click', function (event) {
   (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'addTodoBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -1670,7 +1710,7 @@ addTodoListSubmitBtn.addEventListener('click', function (event) {
 addTodoSubmitBtn.addEventListener('click', function (event) {
   (0,_update__WEBPACK_IMPORTED_MODULE_1__.update)(event, 'submitBtnClicked', _store__WEBPACK_IMPORTED_MODULE_0__["default"]);
 });
-singoutBtn.addEventListener('click', _update__WEBPACK_IMPORTED_MODULE_1__.signout);
+singoutBtn.addEventListener('click', _user__WEBPACK_IMPORTED_MODULE_2__.signout);
 })();
 
 /******/ })()

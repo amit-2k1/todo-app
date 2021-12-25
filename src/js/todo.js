@@ -1,44 +1,7 @@
-import store from './store';
 import { update } from './update';
 import uniqid from 'uniqid';
 
-export function renderUsername(name) {
-  const nameEl = document.querySelector('#profile-name');
-  nameEl.textContent = store.user.name;
-}
-
-export function createTodoLists(todoStore) {
-  const todoListContainer = document.querySelector('ul#todo-list');
-  const todoListTemplate = document.querySelector(
-    'template#todo-list-template'
-  );
-  const liTemplate = todoListTemplate.content.querySelector('.item');
-
-  todoStore.forEach(({ id, listName }) => {
-    const li = document.importNode(liTemplate, true);
-    const a = li.querySelector('a');
-    const p = a.querySelector('a p');
-    const deleteListBtn = li.querySelector('.del-list-btn');
-
-    li.setAttribute('id', id);
-    a.setAttribute('id', id);
-
-    // trigger event when todo list clicked
-    a.addEventListener('click', (event) => {
-      update(event, 'linkClicked', store);
-    });
-
-    // trigger event when delete btn clicked
-    deleteListBtn.addEventListener('click', (event) => {
-      update(event, 'deleteListBtnClicked', store);
-    });
-
-    p.textContent = listName;
-
-    todoListContainer.appendChild(li);
-  });
-}
-
+// create or add todo to DOM
 export function createTodos({ todos, id }) {
   const todosTemplate = document.querySelector('template#todos-template');
   const todosContainer = document.querySelector('div.todos');
@@ -66,11 +29,11 @@ export function createTodos({ todos, id }) {
 
     // trigger event when delete btn clicked
     deleteTodoBtn.addEventListener('click', (event) => {
-      update(event, 'deleteTodoBtnClicked', store);
+      update(event, 'deleteTodoBtnClicked');
     });
-    // triggeer event when tick btn clicked
+    // trigger event when tick btn clicked
     tickTodoBtn.addEventListener('click', (event) => {
-      update(event, 'tickTodoBtnClicked', store);
+      update(event, 'tickTodoBtnClicked');
     });
 
     let todoId;

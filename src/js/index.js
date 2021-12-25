@@ -3,7 +3,8 @@ require('../css/index.css');
 require('../css/form.css');
 
 import store from './store';
-import { signout, update } from './update';
+import { update } from './update';
+import { signout } from './user';
 
 store.createStore();
 
@@ -23,15 +24,15 @@ const addTodoSubmitBtn = addTodoForm.querySelector('.add-todo-submit-btn');
 const singoutBtn = document.querySelector('.sign-out-btn');
 
 backBtn.addEventListener('click', (event) => {
-  update(event, 'backBtnClicked', store);
+  update(event, 'backBtnClicked');
 });
 
 addTodoListBtn.addEventListener('click', (event) => {
-  update(event, 'addListBtnClicked', store);
+  update(event, 'addListBtnClicked');
 });
 
 closeTodoListFormBtn.addEventListener('click', (event) => {
-  update(event, 'closeBtnClicked', store);
+  update(event, 'closeBtnClicked');
 });
 
 openAddTodoFormBtn.addEventListener('click', (event) => {
